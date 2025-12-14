@@ -632,10 +632,10 @@ return (
                                     Email
                                 </h4>
                                 <a
-                                    href="mailto:contact@harmonie-sante.fr"
+                                    href="mailto:cabinet.rfm24@orange.fr"
                                     className="text-[#1E211E] hover:text-[#927950] transition-colors text-sm"
                                 >
-                                    contact@harmonie-sante.fr
+                                    cabinet.rfm24@orange.fr
                             </a>
                             </div>
                             <div className="text-right">

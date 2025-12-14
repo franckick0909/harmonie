@@ -235,10 +235,10 @@ export default function Contact() {
                       (email)
                     </span>
                     <a
-                      href="mailto:contact@harmonie-sante.fr"
+                      href="mailto:cabinet.rfm24@orange.fr"
                       className="text-lg text-[#F4E6CD] hover:text-white transition-colors duration-300 inline-flex items-center gap-3"
                     >
-                      contact@harmonie-sante.fr
+                      cabinet.rfm24@orange.fr
                       <svg
                         className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                         viewBox="0 0 24 24"
