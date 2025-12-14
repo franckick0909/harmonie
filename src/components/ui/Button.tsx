@@ -1,9 +1,9 @@
 "use client";
 
-import { motion } from "framer-motion";
-import * as React from "react";
 import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 import { Loader2 } from "lucide-react";
+import * as React from "react";
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -31,12 +31,19 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       asChild,
       children,
       disabled,
+      // Exclude animation props that conflict with framer-motion
+      onAnimationStart: _onAnimationStart,
+      onAnimationEnd: _onAnimationEnd,
+      onAnimationIteration: _onAnimationIteration,
       ...props
     },
     ref
   ) => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const _ = asChild;
+    // These variables are intentionally unused - they are destructured to exclude them from props
+    void asChild;
+    void _onAnimationStart;
+    void _onAnimationEnd;
+    void _onAnimationIteration;
 
     // Classes de base
     const baseClasses =
@@ -118,11 +125,21 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     // Adapté pour gérer les icônes correctement
     const textFlipContent = (
       <div className="relative z-10 overflow-hidden flex flex-col items-center justify-center min-h-[1.5rem]">
-        <span className={cn("flex items-center justify-center transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:-translate-y-full group-hover:delay-75", gapClasses[size])}>
+        <span
+          className={cn(
+            "flex items-center justify-center transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:-translate-y-full group-hover:delay-75",
+            gapClasses[size]
+          )}
+        >
           {isLoading && <Loader2 className="h-4 w-4 animate-spin shrink-0" />}
           {children}
         </span>
-        <span className={cn("flex items-center justify-center absolute top-0 left-0 right-0 translate-y-full transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:translate-y-0", gapClasses[size])}>
+        <span
+          className={cn(
+            "flex items-center justify-center absolute top-0 left-0 right-0 translate-y-full transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:translate-y-0",
+            gapClasses[size]
+          )}
+        >
           {isLoading && <Loader2 className="h-4 w-4 animate-spin shrink-0" />}
           {children}
         </span>
@@ -131,7 +148,12 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
     // Contenu simple pour les autres variants
     const simpleContent = (
-      <span className={cn("relative z-10 flex items-center justify-center transition-colors duration-300", gapClasses[size])}>
+      <span
+        className={cn(
+          "relative z-10 flex items-center justify-center transition-colors duration-300",
+          gapClasses[size]
+        )}
+      >
         {isLoading && <Loader2 className="h-4 w-4 animate-spin shrink-0" />}
         {children}
       </span>
@@ -196,9 +218,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
                 "group-hover:text-white"
             )}
           >
-            {isLoading && (
-              <Loader2 className="h-4 w-4 animate-spin shrink-0" />
-            )}
+            {isLoading && <Loader2 className="h-4 w-4 animate-spin shrink-0" />}
             {children}
           </span>
         )}
