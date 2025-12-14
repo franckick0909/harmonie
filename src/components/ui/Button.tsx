@@ -31,10 +31,13 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       asChild,
       children,
       disabled,
-      // Exclude animation props that conflict with framer-motion
+      // Exclude props that conflict with framer-motion
       onAnimationStart: _onAnimationStart,
       onAnimationEnd: _onAnimationEnd,
       onAnimationIteration: _onAnimationIteration,
+      onDragStart: _onDragStart,
+      onDragEnd: _onDragEnd,
+      onDrag: _onDrag,
       ...props
     },
     ref
@@ -44,6 +47,9 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     void _onAnimationStart;
     void _onAnimationEnd;
     void _onAnimationIteration;
+    void _onDragStart;
+    void _onDragEnd;
+    void _onDrag;
 
     // Classes de base
     const baseClasses =
