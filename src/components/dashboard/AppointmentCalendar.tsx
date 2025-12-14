@@ -55,8 +55,9 @@ export function AppointmentCalendar({
 
       const date = new Date(demande.dateRdv);
       const dayKey = date.toISOString().split("T")[0];
+      // heureRdv format is "HH:MM" (e.g., "14:00"), not French "14h"
       const hour = demande.heureRdv
-        ? parseInt(demande.heureRdv.split("h")[0])
+        ? parseInt(demande.heureRdv.split(":")[0])
         : date.getHours();
       const key = `${dayKey}-${hour}`;
 
@@ -115,12 +116,8 @@ export function AppointmentCalendar({
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="font-serif text-3xl text-[#1E211E] mb-2">
-            Planning
-          </h1>
-          <p className="text-[#6b6b6b]">
-            Vue hebdomadaire des rendez-vous
-          </p>
+          <h1 className="font-serif text-3xl text-[#1E211E] mb-2">Planning</h1>
+          <p className="text-[#6b6b6b]">Vue hebdomadaire des rendez-vous</p>
         </div>
 
         {/* Navigation */}
@@ -139,7 +136,7 @@ export function AppointmentCalendar({
             onClick={goToToday}
             className="px-4 py-2 bg-[#F4E6CD]-dark hover:bg-[#927950] hover:text-white rounded-lg transition-colors text-sm font-medium"
           >
-            Aujourd'hui
+            Aujourd&apos;hui
           </button>
 
           <span className="px-4 py-2 text-sm font-medium text-[#1E211E] min-w-[180px] text-center">
@@ -174,9 +171,7 @@ export function AppointmentCalendar({
               <p className="text-xs text-[#6b6b6b]">{DAYS[index]}</p>
               <p
                 className={`text-lg font-semibold ${
-                  isToday(date)
-                    ? "text-[#927950]"
-                    : "text-[#1E211E]"
+                  isToday(date) ? "text-[#927950]" : "text-[#1E211E]"
                 }`}
               >
                 {date.getDate()}

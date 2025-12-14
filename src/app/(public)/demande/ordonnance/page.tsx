@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@/components/ui/Button";
 import { FormNavigation } from "@/components/demande/FormNavigation";
+import { Button } from "@/components/ui/Button";
 import { useDemandeStore } from "@/stores/demandeStore";
 import { motion } from "framer-motion";
 import { Check, Plus, X } from "lucide-react";
@@ -21,7 +21,7 @@ export default function OrdonnancePage() {
 
   // Local state initialized from store
   const [ordonnanceOption, setOrdonnanceOption] = useState<OrdonnanceOption>(
-    formData.ordonnance?.choice
+    formData.ordonnance?.choice as OrdonnanceOption
   );
   const [medecinNom, setMedecinNom] = useState(
     formData.ordonnance?.medecinPrescripteur || ""
@@ -32,9 +32,11 @@ export default function OrdonnancePage() {
   const [isDragOver, setIsDragOver] = useState(false);
 
   // Sync local state to store on changes
+  // Note: setOrdonnance in the store already merges with existing data,
+  // so file fields (url, nom, type) are preserved automatically
   useEffect(() => {
     setOrdonnance({
-      choice: ordonnanceOption,
+      choice: ordonnanceOption as "avec_domicile" | "sans_domicile" | "non",
       medecinPrescripteur: medecinNom,
       medecinTraitant: medecinTraitant,
     });
@@ -181,6 +183,8 @@ export default function OrdonnancePage() {
             }`}
           >
             <input
+              title="Ajouter un document"
+              aria-label="Ajouter un document"
               type="file"
               accept="image/*,.pdf"
               onChange={handleFileChange}

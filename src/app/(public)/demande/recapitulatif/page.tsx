@@ -175,7 +175,14 @@ export default function RecapitulatifPage() {
                   variant="ghost"
                   size="sm"
                   onClick={() => {
-                    goToStep(index + 1);
+                    // Step mapping: Soins=1, Ordonnance=2, Disponibilites=3, Patient=4
+                    const stepMapping: Record<string, number> = {
+                      "/demande/soins": 1,
+                      "/demande/ordonnance": 2,
+                      "/demande/disponibilites": 3,
+                      "/demande/patient": 4,
+                    };
+                    goToStep(stepMapping[section.editPath] || 1);
                     router.push(section.editPath);
                   }}
                   className="text-[#927950]"
