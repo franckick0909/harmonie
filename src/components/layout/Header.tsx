@@ -29,7 +29,7 @@ const pagesDropdownLinks = [
 // Liens directs après le dropdown
 const directLinks = [
     { number: "6", name: "Contact", href: "#contact" },
-    { number: "7", name: "Soins", href: "/soins" },
+    { number: "7", name: "Soins", href: "/demande/soins" },
     { number: "8", name: "Dashboard", href: "/dashboard" },
 ];
 
@@ -55,7 +55,7 @@ function NavLink({
         >
             {/* Background hover effect */}
             <motion.div 
-                className="absolute inset-0 bg-[var(--accent)]/30 pointer-events-none origin-bottom"
+                className="absolute inset-0 bg-[#927950]/30 pointer-events-none origin-bottom"
                 variants={{
                     idle: { scaleY: 0 },
                     hover: { scaleY: 1 }
@@ -65,7 +65,7 @@ function NavLink({
             
             {/* Border bottom avec animation */}
             <motion.div 
-                className="absolute bottom-0 left-0 right-0 h-[2px] bg-[var(--accent)] pointer-events-none origin-left"
+                className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#927950] pointer-events-none origin-left"
                 variants={{
                     idle: { scaleX: 0 },
                     hover: { scaleX: 1 }
@@ -74,7 +74,7 @@ function NavLink({
             />
             
             {/* Séparateur statique */}
-            <div className="nav-link-border absolute bottom-0 left-0 right-0 h-px bg-[var(--foreground)]/20 pointer-events-none origin-left" />
+            <div className="nav-link-border absolute bottom-0 left-0 right-0 h-px bg-[#1E211E]/20 pointer-events-none origin-left" />
 
             <div className="relative block py-5 md:py-6">
                 <div className="overflow-hidden">
@@ -154,7 +154,7 @@ function PagesDropdown({
         >
             {/* Background hover effect */}
             <motion.div 
-                className="absolute inset-0 bg-[var(--accent)]/30 pointer-events-none origin-bottom"
+                className="absolute inset-0 bg-[#927950]/30 pointer-events-none origin-bottom"
                 variants={{
                     idle: { scaleY: 0 },
                     hover: { scaleY: 1 }
@@ -164,7 +164,7 @@ function PagesDropdown({
             
             {/* Border bottom avec animation */}
             <motion.div 
-                className="absolute bottom-0 left-0 right-0 h-[2px] bg-[var(--accent)] pointer-events-none origin-left"
+                className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#927950] pointer-events-none origin-left"
                 variants={{
                     idle: { scaleX: 0 },
                     hover: { scaleX: 1 }
@@ -173,7 +173,7 @@ function PagesDropdown({
             />
             
             {/* Séparateur statique */}
-            <div className="nav-link-border absolute bottom-0 left-0 right-0 h-px bg-[var(--foreground)]/20 pointer-events-none origin-left" />
+            <div className="nav-link-border absolute bottom-0 left-0 right-0 h-px bg-[#1E211E]/20 pointer-events-none origin-left" />
 
             {/* Trigger */}
             <div className="relative block py-5 md:py-6 cursor-pointer">
@@ -198,14 +198,14 @@ function PagesDropdown({
                             >
                                 (•)
                             </motion.span>
-                            <span className="text-2xl md:text-3xl lg:text-4xl font-serif tracking-tight uppercase text-[var(--foreground)]">
+                            <span className="text-2xl md:text-3xl lg:text-4xl font-serif tracking-tight uppercase text-[#1E211E]">
                                 Pages
                             </span>
                         </motion.div>
                         
                         {/* Chevron qui tourne */}
                         <motion.svg 
-                            className="w-5 h-5 md:w-6 md:h-6 text-[var(--accent)]"
+                            className="w-5 h-5 md:w-6 md:h-6 text-[#927950]"
                             viewBox="0 0 24 24" 
                             fill="none"
                             stroke="currentColor"
@@ -245,16 +245,16 @@ function PagesDropdown({
                                     <Link
                                         href={link.href}
                                         onClick={(e) => onLinkClick(e, link.href)}
-                                        className="group flex items-center gap-3 py-3 px-4 hover:bg-[var(--accent)]/20 transition-colors duration-300"
+                                        className="group flex items-center gap-3 py-3 px-4 hover:bg-[#927950]/20 transition-colors duration-300"
                                     >
-                                        <span className="text-[10px] font-medium text-[var(--accent)]">
+                                        <span className="text-[10px] font-medium text-[#927950]">
                                             ({link.number})
                                         </span>
-                                        <span className="text-lg font-serif text-[var(--foreground)] group-hover:text-[var(--accent)] transition-colors duration-300">
+                                        <span className="text-lg md:text-xl font-serif text-[#1E211E] group-hover:text-[#000000] transition-colors duration-300 uppercase">
                                             {link.name}
                                         </span>
                                         <motion.svg 
-                                            className="w-4 h-4 text-[var(--accent)] ml-auto opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                                            className="w-4 h-4 text-[#1E211E] ml-auto opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                                             viewBox="0 0 24 24" 
                                             fill="currentColor"
                                         >
@@ -262,7 +262,7 @@ function PagesDropdown({
                                         </motion.svg>
                                     </Link>
                                     {/* Ligne de séparation */}
-                                    <div className="absolute bottom-0 left-4 right-4 h-px bg-[var(--foreground)]/10" />
+                                    <div className="absolute bottom-0 left-4 right-4 h-px bg-[#1E211E]/10" />
                                 </motion.div>
                             ))}
                         </div>
@@ -289,8 +289,8 @@ function SmallNavLink({
             className={cn(
                 "menu-footer-item relative inline-flex items-center gap-2 text-sm transition-colors duration-300",
                 variant === "accent" 
-                    ? "text-[var(--accent)] hover:text-[var(--foreground)]"
-                    : "text-[var(--foreground)]/70 hover:text-[var(--accent)]"
+                    ? "text-[#927950] hover:text-[#1E211E]"
+                    : "text-[#1E211E]/70 hover:text-[#927950]"
             )}
         >
             {children}
@@ -359,7 +359,7 @@ export default function Header() {
 
             tl.to(menuRef.current, {
                 xPercent: 0,
-                duration: 1,
+                duration: 1.2,
                 ease: "menuEase",
             }, "-=0.3");
 
@@ -433,7 +433,7 @@ export default function Header() {
                 menuRef.current,
                 {
                     xPercent: 100,
-                duration: 0.6,
+                duration: 1,
                     ease: "menuEase",
                 },
                 "-=0.15"
@@ -479,22 +479,22 @@ return (
             className={cn(
                 "fixed top-0 left-0 right-0 z-50 transition-all duration-700",
                 isScrolled
-                        ? "bg-[var(--beige)]/95 backdrop-blur-md py-4 border-b border-[var(--foreground)]/5"
+                        ? "bg-[#F4E6CD]/30 backdrop-blur-md py-4 border-b border-[#1E211E]/5"
                         : "bg-transparent py-6 md:py-8"
             )}
         >
-            <div className="container mx-auto px-6 flex items-center justify-between">
+            <div className="flex items-center justify-between px-2 sm:px-4 lg:px-6 xl:px-12 w-full">
                 {/* Logo */}
                     <Link href="/" className="relative z-50 group">
                         <span className={cn(
                             "text-[10px] font-medium tracking-[0.2em] uppercase block mb-1 transition-colors duration-500",
-                            "text-[var(--accent)]"
+                            "text-[#927950]"
                         )}>
                             Cabinet Infirmier
                         </span>
                         <span className={cn(
                             "text-2xl md:text-3xl font-serif tracking-tight transition-colors duration-500",
-                            "text-[var(--foreground)]"
+                            "text-[#1E211E]"
                         )}>
                     Harmonie
                         </span>
@@ -502,6 +502,8 @@ return (
 
                 {/* Menu Button */}
                 <button
+                aria-label="Menu"
+                type="button"
                     onClick={() => setIsMenuOpen(!isMenuOpen)}
                     className={cn(
                             "relative z-[60] flex items-center gap-4 group",
@@ -510,10 +512,10 @@ return (
                         "transition-all duration-500",
                             "border",
                         isMenuOpen
-                                ? "bg-[var(--foreground)] text-[var(--beige)] border-[var(--foreground)]"
+                                ? "bg-[#1E211E] text-[#F4E6CD] border-[#1E211E]"
                                 : isScrolled 
-                                    ? "bg-[var(--card-beige)] text-[var(--foreground)] border-[var(--foreground)]/20 hover:border-[var(--accent)] hover:text-[var(--accent)]"
-                                    : "bg-[var(--card-beige)]/80 text-[var(--foreground)] border-[var(--foreground)]/20 hover:border-[var(--accent)] hover:text-[var(--accent)]"
+                                    ? "bg-[#EDDEC5] text-[#1E211E] border-[#1E211E]/20 hover:border-[#927950] hover:text-[#927950]"
+                                    : "bg-[#EDDEC5]/80 text-[#1E211E] border-[#1E211E]/20 hover:border-[#927950] hover:text-[#927950]"
                     )}
                 >
                         <span className="relative overflow-hidden h-5 w-14">
@@ -540,13 +542,13 @@ return (
                             <span
                                 className={cn(
                                     "block h-px w-full transition-all duration-500 origin-center",
-                                    isMenuOpen ? "bg-[var(--beige)] rotate-45 translate-y-[3.5px] w-5" : "bg-current"
+                                    isMenuOpen ? "bg-[#F4E6CD] rotate-45 translate-y-[3.5px] w-5" : "bg-current"
                                 )}
                             />
                             <span
                                 className={cn(
                                     "block h-px w-full transition-all duration-500 origin-center",
-                                    isMenuOpen ? "bg-[var(--beige)] -rotate-45 -translate-y-[3.5px] w-5" : "bg-current"
+                                    isMenuOpen ? "bg-[#F4E6CD] -rotate-45 -translate-y-[3.5px] w-5" : "bg-current"
                                 )}
                     />
                         </div>
@@ -557,7 +559,7 @@ return (
         {/* Overlay */}
         <div
             ref={overlayRef}
-                className="fixed inset-0 z-[45] bg-[var(--foreground)]/70 backdrop-blur-sm cursor-pointer"
+                className="fixed inset-0 z-[45] bg-[#1E211E]/70 backdrop-blur-sm cursor-pointer"
                 style={{ display: "none" }}
             onClick={() => setIsMenuOpen(false)}
         />
@@ -565,7 +567,7 @@ return (
         {/* Menu Panel */}
         <div
             ref={menuRef}
-                className="fixed top-0 right-0 h-full w-full md:w-[480px] lg:w-[540px] z-[46] bg-[var(--beige)]"
+                className="fixed top-0 right-0 h-full w-full md:w-[480px] lg:w-[540px] z-[46] bg-[#F4E6CD]"
                 style={{ display: "none" }}
         >
                 <div
@@ -573,8 +575,8 @@ return (
                     className="h-full flex flex-col px-8 md:px-12 pt-28 pb-8 overflow-y-auto"
                 >
                     {/* Top Auth Links */}
-                    <div className="flex items-center justify-between pb-6 border-b border-[var(--foreground)]/10 mb-6">
-                        <span className="menu-footer-item text-[10px] font-medium tracking-[0.15em] uppercase text-[var(--foreground)]/50">
+                    <div className="flex items-center justify-between pb-6 border-b border-[#1E211E]/10 mb-6">
+                        <span className="menu-footer-item text-[10px] font-medium tracking-[0.15em] uppercase text-[#1E211E]/50">
                             Espace membre
                         </span>
                         <div className="flex items-center gap-6">
@@ -623,38 +625,38 @@ return (
                     </nav>
 
                     {/* Footer Info */}
-                    <div className="space-y-5 pt-6 border-t border-[var(--foreground)]/10 mt-auto">
+                    <div className="space-y-5 pt-6 border-t border-[#1E211E]/10 mt-auto">
                         <div className="menu-footer-item flex justify-between items-start">
                     <div>
-                                <h4 className="text-[10px] font-medium tracking-[0.15em] uppercase text-[var(--foreground)]/50 mb-2">
+                                <h4 className="text-[10px] font-medium tracking-[0.15em] uppercase text-[#1E211E]/50 mb-2">
                                     Email
                                 </h4>
                                 <a
                                     href="mailto:contact@harmonie-sante.fr"
-                                    className="text-[var(--foreground)] hover:text-[var(--accent)] transition-colors text-sm"
+                                    className="text-[#1E211E] hover:text-[#927950] transition-colors text-sm"
                                 >
                                     contact@harmonie-sante.fr
                             </a>
                             </div>
                             <div className="text-right">
-                                <h4 className="text-[10px] font-medium tracking-[0.15em] uppercase text-[var(--foreground)]/50 mb-2">
+                                <h4 className="text-[10px] font-medium tracking-[0.15em] uppercase text-[#1E211E]/50 mb-2">
                                     Téléphone
                                 </h4>
                                 <a
                                     href="tel:+33553560303"
-                                    className="text-[var(--foreground)] hover:text-[var(--accent)] transition-colors text-sm"
+                                    className="text-[#1E211E] hover:text-[#927950] transition-colors text-sm"
                                 >
-                                    +33 5 53 56 03 03
+                                    05 53 56 04 56
                             </a>
                         </div>
                     </div>
 
                         <div className="menu-footer-item flex justify-between items-end">
                     <div>
-                                <h4 className="text-[10px] font-medium tracking-[0.15em] uppercase text-[var(--foreground)]/50 mb-2">
+                                <h4 className="text-[10px] font-medium tracking-[0.15em] uppercase text-[#1E211E]/50 mb-2">
                                     Adresse
                                 </h4>
-                                <p className="text-[var(--foreground)] text-sm">
+                                <p className="text-[#1E211E] text-sm">
                                     MSP Nontron, 24300 Dordogne
                                 </p>
                             </div>
@@ -663,7 +665,7 @@ return (
                                     <a
                                         key={social.name}
                                         href={social.href}
-                                        className="menu-footer-item w-9 h-9 rounded-full border border-[var(--foreground)]/20 flex items-center justify-center text-[var(--foreground)] hover:bg-[var(--accent)] hover:border-[var(--accent)] hover:text-[var(--beige)] transition-all text-xs font-medium"
+                                        className="menu-footer-item w-9 h-9 rounded-full border border-[#1E211E]/20 flex items-center justify-center text-[#1E211E] hover:bg-[#927950] hover:border-[#927950] hover:text-[#F4E6CD] transition-all text-xs font-medium"
                                     >
                                         {social.name}
                                     </a>

@@ -1,111 +1,114 @@
-import { getCurrentUser } from "@/lib/auth";
-import { signOutAction } from "@/lib/auth-actions";
-import Link from "next/link";
-import { Calendar, FileText, User } from "lucide-react";
+"use client";
 
-export default async function DashboardPage() {
-    const user = await getCurrentUser();
+import { getDemandes } from "@/actions/dashboard";
+import { getPatientStats } from "@/actions/patientStats";
+import { refreshPlanningStats } from "@/actions/planningStats";
+import { AppointmentDetailModal } from "@/components/dashboard/AppointmentDetailModal";
+import { DashboardTabController } from "@/components/dashboard/DashboardTabController";
+import type { Demande, PatientStats } from "@/types/demande";
+import { useCallback, useEffect, useState } from "react";
 
-    return (
-        <div className="min-h-screen bg-[var(--background)] p-6 md:p-12">
-            <div className="max-w-5xl mx-auto">
-                {/* Header */}
-                <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12 pb-8 border-b border-[var(--border)]">
-                    <div>
-                        <p className="text-[var(--accent)] text-xs uppercase tracking-[0.3em] mb-2">
-                            Espace Patient
-                        </p>
-                        <h1 className="font-serif text-3xl md:text-4xl text-[var(--foreground)]">
-                            Bienvenue, {user?.name?.split(" ")[0] || "Patient"}
-                        </h1>
-                        <p className="text-[var(--muted)] text-sm mt-1">{user?.email}</p>
-                    </div>
-                    <div className="flex items-center gap-4">
-                        <Link
-                            href="/profile"
-                            className="flex items-center gap-2 px-5 py-3 border border-[var(--accent)] text-[var(--accent)] hover:bg-[var(--accent)] hover:text-[var(--background)] transition-colors uppercase tracking-wider text-xs font-medium"
-                        >
-                            <User className="w-4 h-4" />
-                            Mon Profil
-                        </Link>
-                        <form action={signOutAction}>
-                            <button
-                                type="submit"
-                                className="px-5 py-3 border border-[var(--border)] text-[var(--muted)] hover:border-[var(--foreground)] hover:text-[var(--foreground)] transition-colors uppercase tracking-wider text-xs font-medium"
-                            >
-                                Déconnexion
-                            </button>
-                        </form>
-                    </div>
-                </header>
+export default function DashboardPage() {
+  const [demandes, setDemandes] = useState<Demande[]>([]);
+  const [selectedDemande, setSelectedDemande] = useState<Demande | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [patientStats, setPatientStats] = useState<PatientStats>({
+    patientsAujourdhui: 0,
+    patientsCetteSemaine: 0,
+    patientsCeMois: 0,
+  });
+  const [currentWeekStart, setCurrentWeekStart] = useState<Date>(() => {
+    // Calculer le début de la semaine (lundi)
+    const today = new Date();
+    const day = today.getDay();
+    const diff = day === 0 ? -6 : 1 - day;
+    const monday = new Date(today);
+    monday.setDate(today.getDate() + diff);
+    monday.setHours(0, 0, 0, 0);
+    return monday;
+  });
 
-                {/* Welcome card */}
-                <div className="p-8 bg-[var(--beige-dark)] mb-8">
-                    <h2 className="font-serif text-xl text-[var(--foreground)] mb-3">
-                        Votre espace personnel
-                    </h2>
-                    <p className="text-[var(--muted)]">
-                        Bienvenue dans votre espace Harmonie. Ici vous pourrez gérer vos rendez-vous,
-                        accéder à vos documents médicaux et mettre à jour vos informations personnelles.
-                    </p>
-                </div>
+  const loadDemandes = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      // Charger TOUTES les demandes pour la vue d'ensemble
+      // Le planning filtrera côté client les demandes de la semaine
+      const result = await getDemandes();
 
-                {/* Cards grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {/* Rendez-vous */}
-                    <div className="group p-6 bg-[var(--beige-dark)] border border-transparent hover:border-[var(--accent)] transition-all cursor-pointer">
-                        <div className="flex items-center gap-3 mb-4">
-                            <div className="w-10 h-10 bg-[var(--accent)]/10 flex items-center justify-center">
-                                <Calendar className="w-5 h-5 text-[var(--accent)]" />
-                            </div>
-                            <h3 className="font-serif text-lg text-[var(--foreground)]">Rendez-vous</h3>
-                        </div>
-                        <p className="text-[var(--muted)] text-sm mb-4">
-                            Consultez et gérez vos prochains rendez-vous.
-                        </p>
-                        <p className="text-[var(--muted-light)] text-xs uppercase tracking-wider">
-                            Aucun rendez-vous à venir
-                        </p>
-                    </div>
+      if (result.success && result.data) {
+        setDemandes(result.data as unknown as Demande[]);
+      }
 
-                    {/* Documents */}
-                    <div className="group p-6 bg-[var(--beige-dark)] border border-transparent hover:border-[var(--accent)] transition-all cursor-pointer">
-                        <div className="flex items-center gap-3 mb-4">
-                            <div className="w-10 h-10 bg-[var(--accent)]/10 flex items-center justify-center">
-                                <FileText className="w-5 h-5 text-[var(--accent)]" />
-                            </div>
-                            <h3 className="font-serif text-lg text-[var(--foreground)]">Documents</h3>
-                        </div>
-                        <p className="text-[var(--muted)] text-sm mb-4">
-                            Accédez à vos ordonnances et documents médicaux.
-                        </p>
-                        <p className="text-[var(--muted-light)] text-xs uppercase tracking-wider">
-                            Aucun document disponible
-                        </p>
-                    </div>
+      // Mettre à jour les statistiques de planning
+      await refreshPlanningStats();
 
-                    {/* Profil */}
-                    <Link href="/profile" className="group p-6 bg-[var(--beige-dark)] border border-transparent hover:border-[var(--accent)] transition-all">
-                        <div className="flex items-center gap-3 mb-4">
-                            <div className="w-10 h-10 bg-[var(--accent)]/10 flex items-center justify-center">
-                                <User className="w-5 h-5 text-[var(--accent)]" />
-                            </div>
-                            <h3 className="font-serif text-lg text-[var(--foreground)]">Mon Profil</h3>
-                        </div>
-                        <p className="text-[var(--muted)] text-sm mb-4">
-                            Modifiez vos informations personnelles et paramètres.
-                        </p>
-                        <p className="text-[var(--accent)] text-xs uppercase tracking-wider group-hover:underline">
-                            Gérer mon profil →
-                        </p>
-                    </Link>
-                </div>
+      // Récupérer les statistiques de patients
+      const patientStatsResult = await getPatientStats();
+      setPatientStats(patientStatsResult);
+    } catch (error) {
+      console.error("Erreur lors du chargement des demandes:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [currentWeekStart]);
 
-                {/* Footer note */}
-                <p className="text-center text-[var(--muted-light)] text-xs mt-12 uppercase tracking-[0.1em]">
-                    Harmonie — Cabinet Infirmier
-                </p>
-            </div>
-        </div>
+  useEffect(() => {
+    loadDemandes();
+  }, [loadDemandes]);
+
+  const handleDemandeClick = (demande: Demande) => {
+    setSelectedDemande(demande);
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+    setSelectedDemande(null);
+  };
+
+  const handleDemandeUpdate = () => {
+    // Recharger les demandes après une mise à jour
+    loadDemandes();
+  };
+
+  const handleOptimisticUpdate = (
+    demandeId: string,
+    newDate: Date,
+    newHeureRdv: string
+  ) => {
+    // Mise à jour optimiste immédiate
+    setDemandes((prevDemandes) =>
+      prevDemandes.map((demande) =>
+        demande.id === demandeId
+          ? { ...demande, dateRdv: newDate, heureRdv: newHeureRdv }
+          : demande
+      )
     );
+  };
+
+  return (
+    <div className="h-screen">
+      <DashboardTabController
+        demandes={demandes}
+        selectedDemande={selectedDemande}
+        isModalOpen={isModalOpen}
+        isLoading={isLoading}
+        currentWeekStart={currentWeekStart}
+        patientStats={patientStats}
+        onDemandeSelect={handleDemandeClick}
+        onModalClose={handleModalClose}
+        onWeekChange={setCurrentWeekStart}
+        onDemandeUpdate={handleDemandeUpdate}
+        onOptimisticUpdate={handleOptimisticUpdate}
+      />
+
+      <AppointmentDetailModal
+        demande={selectedDemande}
+        isOpen={isModalOpen}
+        onClose={handleModalClose}
+        onUpdate={handleDemandeUpdate}
+      />
+    </div>
+  );
 }

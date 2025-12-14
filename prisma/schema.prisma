@@ -61,3 +61,83 @@ model Verification {
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 }
+
+// ==========================================
+// DASHBOARD MODELS - Cabinet Medical
+// ==========================================
+
+model Patient {
+  id                String    @id @default(cuid())
+  nom               String
+  prenom            String
+  email             String    @unique
+  telephone         String
+  dateNaissance     DateTime
+  adresse           String?
+  complementAdresse String?
+  ville             String?
+  codePostal        String?
+  numeroSecu        String?
+  demandes          Demande[]
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+}
+
+model Demande {
+  id        String  @id @default(cuid())
+  patientId String
+  patient   Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  // Type de soin
+  typeSoin    String // Ex: "Pansement", "Injection", "Prélèvement", etc.
+  description String? @db.Text // Description complète (JSON) avec tous les détails
+
+  // Rendez-vous
+  dateRdv  DateTime?
+  heureRdv String? // Ex: "9h00", "14h30"
+  lieu     String? // Adresse du rendez-vous
+
+  // Urgence et statut
+  urgence Urgence @default(NORMALE)
+  statut  Statut  @default(EN_ATTENTE)
+
+  // Notes supplémentaires
+  notes String? @db.Text
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Modèle pour les statistiques de planning
+model PlanningStats {
+  id String @id @default(cuid())
+
+  // Période
+  date DateTime @unique // Date unique pour chaque jour
+  type String // "jour", "semaine", "mois"
+
+  // Compteurs
+  totalPatients         Int @default(0)
+  patientsAujourdhui    Int @default(0)
+  patientsCetteSemaine  Int @default(0)
+  patientsCeMois        Int @default(0)
+
+  // Métadonnées
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Urgence {
+  FAIBLE
+  NORMALE
+  ELEVEE
+  URGENTE
+}
+
+enum Statut {
+  EN_ATTENTE
+  CONFIRMEE
+  EN_COURS
+  TERMINEE
+  ANNULEE
+}

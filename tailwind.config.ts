@@ -9,25 +9,40 @@ const config: Config = {
     theme: {
         extend: {
             colors: {
-                background: "#0a0a0a",
-                foreground: "#ffffff",
+                background: "var(--background)",
+                foreground: "var(--foreground)",
                 primary: {
-                    DEFAULT: "#c8ff00",
-                    foreground: "#0a0a0a",
+                    DEFAULT: "var(--primary)",
+                    foreground: "var(--foreground)",
                 },
                 secondary: {
-                    DEFAULT: "#1a1a1a",
-                    foreground: "#ffffff",
+                    DEFAULT: "var(--beige-dark)",
+                    foreground: "var(--foreground)",
                 },
                 accent: {
-                    DEFAULT: "#c8ff00",
-                    foreground: "#0a0a0a",
+                    DEFAULT: "var(--accent)",
+                    foreground: "var(--background)",
                 },
                 muted: {
-                    DEFAULT: "#262626",
-                    foreground: "#737373",
+                    DEFAULT: "var(--muted)",
+                    foreground: "var(--muted-light)",
+                    light: "var(--muted-light)",
                 },
-                border: "#262626",
+                accent: {
+                    DEFAULT: "var(--accent)",
+                    foreground: "var(--background)",
+                    light: "var(--accent-light)",
+                    dark: "var(--accent-dark)",
+                },
+                border: "var(--border)",
+                beige: {
+                    DEFAULT: "var(--beige)",
+                    dark: "var(--beige-dark)",
+                    darker: "var(--beige-darker)",
+                },
+                card: {
+                    DEFAULT: "var(--card-beige)",
+                },
             },
             fontFamily: {
                 sans: ["var(--font-sans)", "system-ui", "sans-serif"],

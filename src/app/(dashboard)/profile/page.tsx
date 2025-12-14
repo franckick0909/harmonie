@@ -54,19 +54,19 @@ export default function ProfilePage() {
 
     if (isPending) {
         return (
-            <div className="min-h-screen bg-[var(--background)] flex items-center justify-center">
-                <Loader2 className="w-8 h-8 animate-spin text-[var(--accent)]" />
+            <div className="min-h-screen bg-[#F4E6CD] flex items-center justify-center">
+                <Loader2 className="w-8 h-8 animate-spin text-[#927950]" />
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen bg-[var(--background)] p-6 md:p-12">
+        <div className="min-h-screen bg-[#F4E6CD] p-6 md:p-12">
             <div className="max-w-2xl mx-auto">
                 {/* Back link */}
                 <Link
                     href="/dashboard"
-                    className="inline-flex items-center gap-2 text-[var(--muted)] hover:text-[var(--foreground)] transition-colors text-xs uppercase tracking-[0.2em] font-medium mb-12 group"
+                    className="inline-flex items-center gap-2 text-[#6b6b6b] hover:text-[#1E211E] transition-colors text-xs uppercase tracking-[0.2em] font-medium mb-12 group"
                 >
                     <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
                     Retour au tableau de bord
@@ -79,10 +79,10 @@ export default function ProfilePage() {
                 >
                     {/* Header */}
                     <div className="mb-10">
-                        <h1 className="font-serif text-4xl text-[var(--foreground)] mb-2">
+                        <h1 className="font-serif text-4xl text-[#1E211E] mb-2">
                             Mon Profil
                         </h1>
-                        <p className="text-[var(--muted)] text-sm">
+                        <p className="text-[#6b6b6b] text-sm">
                             Gérez vos informations personnelles
                         </p>
                     </div>
@@ -111,24 +111,24 @@ export default function ProfilePage() {
                     )}
 
                     {/* Profile Card */}
-                    <div className="bg-[var(--beige-dark)] p-8">
+                    <div className="bg-[#F4E6CD]-dark p-8">
                         {/* Avatar section */}
-                        <div className="flex items-center gap-6 mb-8 pb-8 border-b border-[var(--border)]">
-                            <div className="w-20 h-20 rounded-full bg-[var(--accent)] flex items-center justify-center text-[var(--background)] text-2xl font-serif">
+                        <div className="flex items-center gap-6 mb-8 pb-8 border-b border-[#d5ccc0]">
+                            <div className="w-20 h-20 rounded-full bg-[#927950] flex items-center justify-center text-background text-2xl font-serif">
                                 {session?.user?.name?.charAt(0).toUpperCase() || "?"}
                             </div>
                             <div>
-                                <h2 className="text-xl font-medium text-[var(--foreground)]">
+                                <h2 className="text-xl font-medium text-[#1E211E]">
                                     {session?.user?.name || "Utilisateur"}
                                 </h2>
-                                <p className="text-[var(--muted)] text-sm">
+                                <p className="text-[#6b6b6b] text-sm">
                                     {session?.user?.email}
                                 </p>
                             </div>
                             {!isEditing && (
                                 <button
                                     onClick={() => setIsEditing(true)}
-                                    className="ml-auto p-2 text-[var(--muted)] hover:text-[var(--accent)] transition-colors"
+                                    className="ml-auto p-2 text-[#6b6b6b] hover:text-[#927950] transition-colors"
                                 >
                                     <Edit2 className="w-5 h-5" />
                                 </button>
@@ -138,12 +138,12 @@ export default function ProfilePage() {
                         {isEditing ? (
                             <form onSubmit={handleUpdateProfile} className="space-y-6">
                                 <div className="space-y-2">
-                                    <label className="flex items-center gap-2 text-xs uppercase tracking-[0.15em] text-[var(--muted)]">
+                                    <label className="flex items-center gap-2 text-xs uppercase tracking-[0.15em] text-[#6b6b6b]">
                                         <User className="w-4 h-4" />
                                         Nom complet
                                     </label>
                                     <Input
-                                        className="w-full bg-transparent border border-[var(--border)] rounded-none px-4 py-3 text-[var(--foreground)] placeholder:text-[var(--muted-light)] focus:border-[var(--accent)] transition-colors focus:ring-0"
+                                        className="w-full bg-transparent border border-[#d5ccc0] rounded-none px-4 py-3 text-[#1E211E] placeholder:text-[#9a9a9a] focus:border-[#927950] transition-colors focus:ring-0"
                                         value={name}
                                         onChange={(e) => setName(e.target.value)}
                                         required
@@ -151,17 +151,17 @@ export default function ProfilePage() {
                                 </div>
 
                                 <div className="space-y-2">
-                                    <label className="flex items-center gap-2 text-xs uppercase tracking-[0.15em] text-[var(--muted)]">
+                                    <label className="flex items-center gap-2 text-xs uppercase tracking-[0.15em] text-[#6b6b6b]">
                                         <Mail className="w-4 h-4" />
                                         Email
                                     </label>
                                     <Input
                                         type="email"
-                                        className="w-full bg-[var(--background)] border border-[var(--border)] rounded-none px-4 py-3 text-[var(--muted)] cursor-not-allowed"
+                                        className="w-full bg-[#F4E6CD] border border-[#d5ccc0] rounded-none px-4 py-3 text-[#6b6b6b] cursor-not-allowed"
                                         value={email}
                                         disabled
                                     />
-                                    <p className="text-xs text-[var(--muted-light)]">
+                                    <p className="text-xs text-[#9a9a9a]">
                                         L&apos;email ne peut pas être modifié pour des raisons de sécurité.
                                     </p>
                                 </div>
@@ -170,7 +170,7 @@ export default function ProfilePage() {
                                     <Button
                                         type="submit"
                                         disabled={isLoading}
-                                        className="h-12 px-8 bg-[var(--accent)] text-[var(--background)] hover:bg-[var(--accent-dark)] rounded-none uppercase tracking-[0.15em] text-xs font-medium disabled:opacity-50 transition-all"
+                                        className="h-12 px-8 bg-[#927950] text-background hover:bg-[#927950]-dark rounded-none uppercase tracking-[0.15em] text-xs font-medium disabled:opacity-50 transition-all"
                                     >
                                         {isLoading ? (
                                             <Loader2 className="w-4 h-4 animate-spin" />
@@ -184,7 +184,7 @@ export default function ProfilePage() {
                                             setIsEditing(false);
                                             setName(session?.user?.name || "");
                                         }}
-                                        className="h-12 px-8 border border-[var(--border)] text-[var(--muted)] hover:text-[var(--foreground)] hover:border-[var(--foreground)] rounded-none uppercase tracking-[0.15em] text-xs font-medium transition-all"
+                                        className="h-12 px-8 border border-[#d5ccc0] text-[#6b6b6b] hover:text-[#1E211E] hover:border-[#1E211E] rounded-none uppercase tracking-[0.15em] text-xs font-medium transition-all"
                                     >
                                         Annuler
                                     </button>
@@ -193,18 +193,18 @@ export default function ProfilePage() {
                         ) : (
                             <div className="space-y-6">
                                 <div className="flex items-center gap-4">
-                                    <User className="w-5 h-5 text-[var(--accent)]" />
+                                    <User className="w-5 h-5 text-[#927950]" />
                                     <div>
-                                        <p className="text-xs uppercase tracking-[0.15em] text-[var(--muted)] mb-1">Nom</p>
-                                        <p className="text-[var(--foreground)]">{session?.user?.name || "-"}</p>
+                                        <p className="text-xs uppercase tracking-[0.15em] text-[#6b6b6b] mb-1">Nom</p>
+                                        <p className="text-[#1E211E]">{session?.user?.name || "-"}</p>
                                     </div>
                                 </div>
 
                                 <div className="flex items-center gap-4">
-                                    <Mail className="w-5 h-5 text-[var(--accent)]" />
+                                    <Mail className="w-5 h-5 text-[#927950]" />
                                     <div>
-                                        <p className="text-xs uppercase tracking-[0.15em] text-[var(--muted)] mb-1">Email</p>
-                                        <p className="text-[var(--foreground)]">{session?.user?.email}</p>
+                                        <p className="text-xs uppercase tracking-[0.15em] text-[#6b6b6b] mb-1">Email</p>
+                                        <p className="text-[#1E211E]">{session?.user?.email}</p>
                                     </div>
                                 </div>
                             </div>
@@ -212,30 +212,30 @@ export default function ProfilePage() {
                     </div>
 
                     {/* Security section */}
-                    <div className="mt-8 bg-[var(--beige-dark)] p-8">
-                        <h3 className="font-serif text-lg text-[var(--foreground)] mb-6 flex items-center gap-3">
-                            <Lock className="w-5 h-5 text-[var(--accent)]" />
+                    <div className="mt-8 bg-[#F4E6CD]-dark p-8">
+                        <h3 className="font-serif text-lg text-[#1E211E] mb-6 flex items-center gap-3">
+                            <Lock className="w-5 h-5 text-[#927950]" />
                             Sécurité
                         </h3>
 
                         <div className="space-y-4">
                             <Link
                                 href="/forgot-password"
-                                className="flex items-center justify-between p-4 border border-[var(--border)] hover:border-[var(--accent)] transition-colors group"
+                                className="flex items-center justify-between p-4 border border-[#d5ccc0] hover:border-[#927950] transition-colors group"
                             >
-                                <span className="text-sm text-[var(--foreground)]">Changer mon mot de passe</span>
-                                <ArrowLeft className="w-4 h-4 text-[var(--muted)] group-hover:text-[var(--accent)] rotate-180 transition-colors" />
+                                <span className="text-sm text-[#1E211E]">Changer mon mot de passe</span>
+                                <ArrowLeft className="w-4 h-4 text-[#6b6b6b] group-hover:text-[#927950] rotate-180 transition-colors" />
                             </Link>
 
                             <Link
                                 href="/verify-phone"
-                                className="flex items-center justify-between p-4 border border-[var(--border)] hover:border-[var(--accent)] transition-colors group"
+                                className="flex items-center justify-between p-4 border border-[#d5ccc0] hover:border-[#927950] transition-colors group"
                             >
                                 <div className="flex items-center gap-3">
-                                    <Phone className="w-4 h-4 text-[var(--accent)]" />
-                                    <span className="text-sm text-[var(--foreground)]">Vérifier mon téléphone</span>
+                                    <Phone className="w-4 h-4 text-[#927950]" />
+                                    <span className="text-sm text-[#1E211E]">Vérifier mon téléphone</span>
                                 </div>
-                                <ArrowLeft className="w-4 h-4 text-[var(--muted)] group-hover:text-[var(--accent)] rotate-180 transition-colors" />
+                                <ArrowLeft className="w-4 h-4 text-[#6b6b6b] group-hover:text-[#927950] rotate-180 transition-colors" />
                             </Link>
                         </div>
                     </div>

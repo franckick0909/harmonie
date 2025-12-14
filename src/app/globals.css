@@ -1,41 +1,48 @@
 @import "tailwindcss";
 
-:root {
-  /* Palette Leandra-inspired - Tons clairs */
-  --background: #F4E6CD; /* Beige principal */
-  --background-dark: #0a0a0a; /* Fond sombre pour certaines sections */
-  --foreground: #1E211E; /* Noir principal */
-  --foreground-light: #ffffff;
-  
-  /* Couleur accent - Doré/Bronze */
-  --accent: #927950; /* Couleur hero Leandra */
-  --accent-light: #a8906a;
-  --accent-dark: #7a6442;
-  
-  /* Beiges et neutres */
-  --beige: #F4E6CD; /* Beige principal */
-  --beige-dark: #EDDEC5; /* Cards transparentes */
-  --card-beige: #EDDEC5; /* Alias pour les cards */
-  --beige-darker: #e0d4bc;
-  
-  /* Couleurs neutres */
-  --muted: #6b6b6b;
-  --muted-light: #9a9a9a;
-  --border: #d5ccc0;
-  --border-dark: #262626;
-  
-  /* Ancien - gardé pour compatibilité */
-  --light-beige: #F4E6CD;
-  --dark-brown: #1E211E;
-  --hover-bg-light: #EDDEC5;
-  --primary: #927950;
-  --menu-bg: #F4E6CD;
-  --menu-hover: #EDDEC5;
-  --menu-text: #1E211E;
-  
-  /* Easing personnalisé */
-  --ease-smooth: cubic-bezier(0.625, 0.05, 0, 1);
-  --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+@layer base {
+  :root {
+    /* Premium Palette - Light Mode Only */
+    /* Wrapped in hsl() to match tailwind.config.ts expectation of var(--name) being a color */
+
+    /* Backgrounds */
+    --background: hsl(38, 50%, 90%); /* #F4E6CD - Beige principal */
+    --background-dark: hsl(0, 0%, 4%); /* #0a0a0a - Fond sombre */
+
+    /* Foregrounds */
+    --foreground: hsl(120, 4%, 12%); /* #1E211E - Noir principal */
+    --foreground-light: hsl(0, 0%, 100%); /* #ffffff - Blanc */
+
+    /* Accent - Doré/Bronze */
+    --accent: hsl(38, 30%, 45%); /* #927950 - Couleur hero */
+    --accent-light: hsl(38, 25%, 52%); /* #a8906a */
+    --accent-dark: hsl(38, 30%, 37%); /* #7a6442 */
+
+    /* Beiges et neutres */
+    --beige: hsl(38, 50%, 90%); /* #F4E6CD - Beige principal */
+    --beige-dark: hsl(38, 40%, 88%); /* #EDDEC5 - Cards transparentes */
+    --card-beige: hsl(38, 40%, 88%); /* #EDDEC5 - Alias pour les cards */
+    --beige-darker: hsl(38, 35%, 83%); /* #e0d4bc */
+
+    /* Couleurs neutres */
+    --muted: hsl(0, 0%, 42%); /* #6b6b6b */
+    --muted-light: hsl(0, 0%, 60%); /* #9a9a9a */
+    --border: hsl(38, 15%, 80%); /* #d5ccc0 */
+    --border-dark: hsl(0, 0%, 15%); /* #262626 */
+
+    /* Ancien - gardé pour compatibilité */
+    --light-beige: hsl(38, 50%, 90%); /* #F4E6CD */
+    --dark-brown: hsl(120, 4%, 12%); /* #1E211E */
+    --hover-bg-light: hsl(38, 40%, 88%); /* #EDDEC5 */
+    --primary: hsl(38, 30%, 45%); /* #927950 */
+    --menu-bg: hsl(38, 50%, 90%); /* #F4E6CD */
+    --menu-hover: hsl(38, 40%, 88%); /* #EDDEC5 */
+    --menu-text: hsl(120, 4%, 12%); /* #1E211E */
+
+    /* Easing personnalisé */
+    --ease-smooth: cubic-bezier(0.625, 0.05, 0, 1);
+    --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+  }
 }
 
 * {
@@ -52,7 +59,12 @@ body {
 }
 
 /* Typography */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-serif);
   font-weight: 400;
   letter-spacing: -0.02em;
@@ -155,11 +167,21 @@ html {
 }
 
 /* Stagger delays */
-.stagger-1 { transition-delay: 0.1s; }
-.stagger-2 { transition-delay: 0.2s; }
-.stagger-3 { transition-delay: 0.3s; }
-.stagger-4 { transition-delay: 0.4s; }
-.stagger-5 { transition-delay: 0.5s; }
+.stagger-1 {
+  transition-delay: 0.1s;
+}
+.stagger-2 {
+  transition-delay: 0.2s;
+}
+.stagger-3 {
+  transition-delay: 0.3s;
+}
+.stagger-4 {
+  transition-delay: 0.4s;
+}
+.stagger-5 {
+  transition-delay: 0.5s;
+}
 
 /* Grain overlay */
 .grain::before {
@@ -182,7 +204,11 @@ html {
 
 /* Text gradient - doré */
 .text-gradient {
-  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--accent) 0%,
+    var(--accent-dark) 100%
+  );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -190,8 +216,8 @@ html {
 
 /* Blur backdrop */
 .blur-backdrop {
-  backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
 }
 
 /* Border gradient - doré */
@@ -204,7 +230,12 @@ html {
   position: absolute;
   inset: 0;
   padding: 1px;
-  background: linear-gradient(135deg, var(--accent) 0%, transparent 50%, var(--accent) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--accent) 0%,
+    transparent 50%,
+    var(--accent) 100%
+  );
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
@@ -231,8 +262,12 @@ html {
 }
 
 @keyframes marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 /* Split text animation container */
@@ -350,8 +385,12 @@ html {
 }
 
 @keyframes scrollLine {
-  0% { transform: translateY(-100%); }
-  100% { transform: translateY(400%); }
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(400%);
+  }
 }
 
 /* Ligne décorative animée */
