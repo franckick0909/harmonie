@@ -180,16 +180,16 @@ export default function ProfilPage() {
         className="bg-white rounded-2xl shadow-sm border border-[#d5ccc0]/30 overflow-hidden"
       >
         {/* En-tête avec avatar */}
-        <div className="bg-gradient-to-r from-[#927950]/10 to-[#927950]/5 p-8">
-          <div className="flex items-center gap-6">
-            <div className="w-20 h-20 rounded-full bg-[#927950] flex items-center justify-center text-white text-2xl font-serif">
+        <div className="bg-gradient-to-r from-[#927950]/10 to-[#927950]/5 p-4 sm:p-8">
+          <div className="flex items-center gap-4 sm:gap-6">
+            <div className="w-14 h-14 sm:w-20 sm:h-20 rounded-full bg-[#927950] flex items-center justify-center text-white text-xl sm:text-2xl font-serif shrink-0">
               {session?.user?.name?.charAt(0).toUpperCase() || "?"}
             </div>
-            <div>
-              <h2 className="text-xl font-medium text-[#1E211E]">
+            <div className="min-w-0 flex-1">
+              <h2 className="text-lg sm:text-xl font-medium text-[#1E211E] truncate">
                 {session?.user?.name || "Patient"}
               </h2>
-              <p className="text-[#6b6b6b]">{session?.user?.email}</p>
+              <p className="text-[#6b6b6b] text-sm sm:text-base truncate">{session?.user?.email}</p>
             </div>
             {!isEditing && (
               <button
@@ -197,16 +197,16 @@ export default function ProfilPage() {
                 aria-label="Modifier le profil"
                 title="Modifier le profil"
                 onClick={() => setIsEditing(true)}
-                className="ml-auto p-3 bg-white rounded-full shadow-sm hover:shadow-md transition-all"
+                className="p-2 sm:p-3 bg-white rounded-full shadow-sm hover:shadow-md transition-all shrink-0"
               >
-                <Edit2 className="w-5 h-5 text-[#927950]" />
+                <Edit2 className="w-4 h-4 sm:w-5 sm:h-5 text-[#927950]" />
               </button>
             )}
           </div>
         </div>
 
         {/* Informations */}
-        <div className="p-8 space-y-6">
+        <div className="p-4 sm:p-8 space-y-6">
           {isEditing ? (
             // Mode édition
             <form className="space-y-6">
@@ -335,23 +335,23 @@ export default function ProfilPage() {
           ) : (
             // Mode affichage
             <div className="space-y-4">
-              <div className="flex items-center gap-4 p-4 bg-[#F9F7F2] rounded-xl">
-                <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center">
+              <div className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 bg-[#F9F7F2] rounded-xl">
+                <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shrink-0">
                   <Mail className="w-5 h-5 text-[#927950]" />
                 </div>
-                <div>
+                <div className="min-w-0 flex-1">
                   <p className="text-xs text-[#6b6b6b]">Email</p>
-                  <p className="text-[#1E211E]">{session?.user?.email}</p>
+                  <p className="text-[#1E211E] text-sm sm:text-base truncate">{session?.user?.email}</p>
                 </div>
               </div>
 
-              <div className="flex items-center gap-4 p-4 bg-[#F9F7F2] rounded-xl">
-                <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center">
+              <div className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 bg-[#F9F7F2] rounded-xl">
+                <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shrink-0">
                   <User className="w-5 h-5 text-[#927950]" />
                 </div>
-                <div>
+                <div className="min-w-0 flex-1">
                   <p className="text-xs text-[#6b6b6b]">Nom complet</p>
-                  <p className="text-[#1E211E]">
+                  <p className="text-[#1E211E] text-sm sm:text-base">
                     {originalData.prenom && originalData.nom
                       ? `${originalData.prenom} ${originalData.nom}`
                       : session?.user?.name || "Non renseigné"}
@@ -360,32 +360,32 @@ export default function ProfilPage() {
               </div>
 
               <div
-                className={`flex items-center gap-4 p-4 bg-[#F9F7F2] rounded-xl ${
+                className={`flex items-center gap-3 sm:gap-4 p-3 sm:p-4 bg-[#F9F7F2] rounded-xl ${
                   !originalData.telephone ? "opacity-50" : ""
                 }`}
               >
-                <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center">
+                <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shrink-0">
                   <Phone className="w-5 h-5 text-[#927950]" />
                 </div>
-                <div>
+                <div className="min-w-0 flex-1">
                   <p className="text-xs text-[#6b6b6b]">Téléphone</p>
-                  <p className="text-[#1E211E]">
+                  <p className="text-[#1E211E] text-sm sm:text-base">
                     {originalData.telephone || "Non renseigné"}
                   </p>
                 </div>
               </div>
 
               <div
-                className={`flex items-center gap-4 p-4 bg-[#F9F7F2] rounded-xl ${
+                className={`flex items-center gap-3 sm:gap-4 p-3 sm:p-4 bg-[#F9F7F2] rounded-xl ${
                   !originalData.adresse ? "opacity-50" : ""
                 }`}
               >
-                <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center">
+                <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shrink-0">
                   <MapPin className="w-5 h-5 text-[#927950]" />
                 </div>
-                <div>
+                <div className="min-w-0 flex-1">
                   <p className="text-xs text-[#6b6b6b]">Adresse</p>
-                  <p className="text-[#1E211E]">
+                  <p className="text-[#1E211E] text-sm sm:text-base">
                     {originalData.adresse
                       ? `${originalData.adresse}${
                           originalData.codePostal

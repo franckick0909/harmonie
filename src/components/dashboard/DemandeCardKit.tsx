@@ -8,6 +8,7 @@ import { useDraggable } from "@dnd-kit/core";
 interface DemandeCardKitProps {
   demande: Demande;
   onClick: () => void;
+  dayIndex?: number; // 0 = lundi, 6 = dimanche - pour positionner la hover card
 }
 
 const urgenceBadgeVariants = {
@@ -49,7 +50,11 @@ type BadgeVariant =
   | "warning"
   | "info";
 
-export function DemandeCardKit({ demande, onClick }: DemandeCardKitProps) {
+export function DemandeCardKit({
+  demande,
+  onClick,
+  dayIndex = 0,
+}: DemandeCardKitProps) {
   const { attributes, listeners, setNodeRef, transform, isDragging } =
     useDraggable({
       id: demande.id,
@@ -147,9 +152,15 @@ export function DemandeCardKit({ demande, onClick }: DemandeCardKitProps) {
         </span>
       </Badge>
 
-      {/* Hover Card */}
+      {/* Hover Card - Below on mobile/tablet, left/right on desktop based on dayIndex */}
       {!isDragging && (
-        <div className="hidden group-hover:block absolute left-full top-0 ml-2 z-50 w-64 bg-[#F4E6CD]/05 backdrop-blur-sm border-[#d5ccc0]/20 shadow-lg rounded-lg p-3 animate-in fade-in zoom-in-95 duration-200 origin-top-left">
+        <div
+          className={`hidden group-hover:block absolute z-100 w-52 sm:w-56 lg:w-64 bg-white border border-[#d5ccc0]/30 shadow-xl rounded-xl p-2.5 sm:p-3 animate-in fade-in zoom-in-95 duration-200 top-full left-1/2 -translate-x-1/2 mt-1 origin-top lg:top-0 lg:mt-0 lg:translate-x-0 ${
+            dayIndex >= 5
+              ? "lg:right-full lg:left-auto lg:mr-2 lg:origin-top-right"
+              : "lg:left-full lg:ml-2 lg:origin-top-left"
+          }`}
+        >
           <div className="space-y-3">
             {/* Header */}
             <div>

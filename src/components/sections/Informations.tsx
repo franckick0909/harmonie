@@ -1,7 +1,6 @@
 "use client";
 
 import { useGSAP } from "@gsap/react";
-import { motion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useRef } from "react";
@@ -163,13 +162,7 @@ export default function Informations() {
 
         {/* Address & Hours */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-20 pb-20">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="info-card group p-6 md:p-8 bg-white/70 backdrop-blur-sm rounded-xl border border-[#1E211E]/5 hover:border-[#927950]/30 hover:shadow-lg transition-all duration-300"
-          >
+          <div className="info-card group p-6 md:p-8 bg-white/70 backdrop-blur-sm rounded-xl border border-[#1E211E]/5 hover:border-[#927950]/30 hover:shadow-lg transition-all duration-300">
             <div className="flex items-start gap-4">
               <div className="w-14 h-14 rounded-xl bg-[#927950] flex items-center justify-center shrink-0 shadow-md">
                 <svg
@@ -218,15 +211,9 @@ export default function Informations() {
                 </p>
               </div>
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="info-card group p-6 md:p-8 bg-white/70 backdrop-blur-sm rounded-xl border border-[#1E211E]/5 hover:border-[#927950]/30 hover:shadow-lg transition-all duration-300"
-          >
+          <div className="info-card group p-6 md:p-8 bg-white/70 backdrop-blur-sm rounded-xl border border-[#1E211E]/5 hover:border-[#927950]/30 hover:shadow-lg transition-all duration-300">
             <div className="flex items-start gap-4">
               <div className="w-14 h-14 rounded-xl bg-[#927950] flex items-center justify-center shrink-0 shadow-md">
                 <svg
@@ -260,7 +247,7 @@ export default function Informations() {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
 
         {/* Médecins Généralistes */}
@@ -287,10 +274,9 @@ export default function Informations() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {medecins.map((medecin, index) => (
-              <motion.div
+              <div
                 key={index}
-                className="info-card relative p-8 bg-white/80 backdrop-blur-sm border border-[#1E211E]/5 hover:border-[#927950]/40 hover:shadow-lg transition-all duration-300 group rounded-lg"
-                whileHover={{ y: -4 }}
+                className="info-card relative p-8 bg-white/80 backdrop-blur-sm border border-[#1E211E]/5 hover:border-[#927950]/40 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group rounded-lg"
               >
                 {/* Corner decorations */}
                 <div className="absolute top-0 left-0 w-5 h-5 border-t-2 border-l-2 border-[#927950] rounded-tl-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -324,7 +310,7 @@ export default function Informations() {
                   </svg>
                   {medecin.tel}
                 </a>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -353,11 +339,10 @@ export default function Informations() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {specialistes.map((spec, index) => (
-              <motion.a
+              <a
                 key={index}
                 href={`tel:${spec.tel.replace(/\s/g, "")}`}
-                className="info-card relative p-5 bg-white/60 backdrop-blur-sm border border-[#1E211E]/5 hover:border-[#927950]/40 hover:bg-white hover:shadow-md transition-all duration-300 group rounded-lg"
-                whileHover={{ y: -2 }}
+                className="info-card relative p-5 bg-white/60 backdrop-blur-sm border border-[#1E211E]/5 hover:border-[#927950]/40 hover:bg-white hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 group rounded-lg"
               >
                 <div className="flex items-center justify-between gap-4">
                   <div className="flex-1 min-w-0">
@@ -397,7 +382,7 @@ export default function Informations() {
                     </svg>
                   </div>
                 </div>
-              </motion.a>
+              </a>
             ))}
           </div>
         </div>
@@ -426,11 +411,10 @@ export default function Informations() {
           </div>
           <div className="flex flex-wrap gap-4">
             {infirmiers.map((tel, index) => (
-              <motion.a
+              <a
                 key={index}
                 href={`tel:${tel.replace(/\s/g, "")}`}
-                className="info-card relative px-6 py-4 bg-white border border-[#927950] text-lg font-semibold text-[#927950] hover:bg-[#927950] hover:text-white rounded-lg transition-all duration-300 inline-flex items-center gap-3 shadow-sm hover:shadow-md"
-                whileTap={{ scale: 0.98 }}
+                className="info-card relative px-6 py-4 bg-white border border-[#927950] text-lg font-semibold text-[#927950] hover:bg-[#927950] hover:text-white rounded-lg transition-all duration-300 inline-flex items-center gap-3 shadow-sm hover:shadow-md active:scale-[0.98]"
               >
                 <svg
                   className="w-5 h-5"
@@ -446,18 +430,13 @@ export default function Informations() {
                   />
                 </svg>
                 {tel}
-              </motion.a>
+              </a>
             ))}
           </div>
         </div>
 
         {/* Téléconsultation */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="relative p-8 md:p-12 bg-[#1E211E] text-[#F4E6CD] overflow-hidden"
-        >
+        <div className="info-card relative p-8 md:p-12 bg-[#1E211E] text-[#F4E6CD] overflow-hidden">
           {/* Corner decorations */}
           <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-[#927950]" />
           <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-[#927950]" />
@@ -520,7 +499,7 @@ export default function Informations() {
               </div>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
 
       {/* Bottom decorative line */}

@@ -175,20 +175,20 @@ export default function RendezVousPage() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1 * index }}
-                  className="bg-white rounded-2xl p-6 shadow-sm border border-[#d5ccc0]/30"
+                  className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-[#d5ccc0]/30"
                 >
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 rounded-full bg-[#F9F7F2] flex items-center justify-center">
+                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 sm:gap-4">
+                    <div className="flex items-start gap-3 sm:gap-4">
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#F9F7F2] flex items-center justify-center shrink-0">
                         {getStatusIcon(rdv.statut)}
                       </div>
-                      <div>
-                        <h3 className="font-medium text-[#1E211E] text-lg">
+                      <div className="min-w-0 flex-1">
+                        <h3 className="font-medium text-[#1E211E] text-base sm:text-lg">
                           {rdv.typeSoin}
                         </h3>
-                        <div className="flex flex-wrap items-center gap-4 mt-2 text-sm text-[#6b6b6b]">
+                        <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-1 sm:gap-4 mt-2 text-sm text-[#6b6b6b]">
                           <span className="flex items-center gap-1">
-                            <Calendar className="w-4 h-4" />
+                            <Calendar className="w-4 h-4 shrink-0" />
                             {rdv.dateRdv &&
                               new Date(rdv.dateRdv).toLocaleDateString(
                                 "fr-FR",
@@ -202,13 +202,13 @@ export default function RendezVousPage() {
                           </span>
                           {rdv.heureRdv && (
                             <span className="flex items-center gap-1">
-                              <Clock className="w-4 h-4" />
+                              <Clock className="w-4 h-4 shrink-0" />
                               {rdv.heureRdv}
                             </span>
                           )}
                           {rdv.lieu && (
                             <span className="flex items-center gap-1">
-                              <MapPin className="w-4 h-4" />
+                              <MapPin className="w-4 h-4 shrink-0" />
                               {rdv.lieu}
                             </span>
                           )}
@@ -221,7 +221,7 @@ export default function RendezVousPage() {
                       </div>
                     </div>
                     <span
-                      className={`px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap ${status.className}`}
+                      className={`px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap self-start ${status.className}`}
                     >
                       {status.label}
                     </span>

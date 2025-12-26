@@ -67,7 +67,7 @@ function PatientLayoutContent({ children }: PatientLayoutProps) {
         <Header />
         <div className="w-full px-2 sm:px-4 lg:px-6 xl:px-12 py-8 pt-24 md:pt-28">
         {/* Header */}
-        <header className="fixed top-28 left-0 right-0 z-40 bg-white/80 backdrop-blur-md border-b border-[#d5ccc0]/30">
+        <header className="fixed top-17 sm:top-28 left-0 right-0 z-40 bg-white/80 backdrop-blur-md border-b border-[#d5ccc0]/30">
           <div className="w-full px-2 sm:px-4 lg:px-6 xl:px-12">
             <div className="flex items-center justify-between h-16 md:h-20">
               {/* Logo */}

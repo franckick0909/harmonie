@@ -149,6 +149,7 @@ export function WeekViewKit({
                 hour={0}
                 demandes={getDemandesAllDay(day)}
                 onDemandeClick={onDemandeClick}
+                dayIndex={dayIndex}
               />
             );
           })}
@@ -172,6 +173,7 @@ export function WeekViewKit({
                   hour={hour}
                   demandes={getDemandesForDayAndHour(day, hour)}
                   onDemandeClick={onDemandeClick}
+                  dayIndex={dayIndex}
                 />
               );
             })}
@@ -188,11 +190,13 @@ function DropZoneKit({
   hour,
   demandes,
   onDemandeClick,
+  dayIndex,
 }: {
   day: Date;
   hour: number;
   demandes: Demande[];
   onDemandeClick: (demande: Demande) => void;
+  dayIndex: number;
 }) {
   const { isOver, setNodeRef } = useDroppable({
     id: `drop-${day.getTime()}-${hour}`,
@@ -230,6 +234,7 @@ function DropZoneKit({
             key={demande.id}
             demande={demande}
             onClick={() => onDemandeClick(demande)}
+            dayIndex={dayIndex}
           />
         ))}
       </div>
