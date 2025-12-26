@@ -1,6 +1,7 @@
 "use client";
 
 import { DemandeCardKit } from "@/components/dashboard/DemandeCardKit";
+import { exportPlanningToPDF } from "@/services/exportService";
 import type { Demande } from "@/types/demande";
 import {
   DndContext,
@@ -14,7 +15,14 @@ import {
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
-import { ChevronLeft, ChevronRight, Grid3X3, List } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  Download,
+  Grid3X3,
+  List,
+  Printer,
+} from "lucide-react";
 import { useMemo, useState } from "react";
 import { PlanningViewKit } from "./PlanningViewKit";
 
@@ -377,23 +385,47 @@ export function PlanningView({
           </button>
         </div>
 
-        {/* Légende des statuts */}
-        <div className="flex flex-wrap items-center gap-4 text-sm text-[#1E211E]">
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-blue-500 border border-blue-300"></div>
-            <span>{periodStats.confirmees} Confirmés</span>
+        {/* Légende des statuts et Export */}
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <div className="flex flex-wrap items-center gap-4 text-sm text-[#1E211E]">
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded-full bg-blue-500 border border-blue-300"></div>
+              <span>{periodStats.confirmees} Confirmés</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded-full bg-purple-500 border border-purple-300"></div>
+              <span>{periodStats.enCours} En cours</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded-full bg-green-500 border border-green-300"></div>
+              <span>{periodStats.terminees} Terminés</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded-full bg-red-500 border border-red-300"></div>
+              <span>{periodStats.urgentes} Urgents</span>
+            </div>
           </div>
+
+          {/* Boutons Export/Imprimer */}
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-purple-500 border border-purple-300"></div>
-            <span>{periodStats.enCours} En cours</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-green-500 border border-green-300"></div>
-            <span>{periodStats.terminees} Terminés</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-red-500 border border-red-300"></div>
-            <span>{periodStats.urgentes} Urgents</span>
+            <button
+              type="button"
+              onClick={() =>
+                exportPlanningToPDF(filteredDemandes, startDate, viewType)
+              }
+              className="flex items-center gap-2 px-3 py-2 bg-[#927950] text-white rounded-lg hover:bg-[#7a6443] transition-colors text-sm"
+            >
+              <Download className="w-4 h-4" />
+              <span className="hidden sm:inline">Export PDF</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => window.print()}
+              className="flex items-center gap-2 px-3 py-2 bg-white border border-[#d5ccc0] text-[#1E211E] rounded-lg hover:bg-[#F9F7F2] transition-colors text-sm"
+            >
+              <Printer className="w-4 h-4" />
+              <span className="hidden sm:inline">Imprimer</span>
+            </button>
           </div>
         </div>
       </div>
@@ -497,7 +529,7 @@ function MonthDropZone({
         ${!isCurrentMonth ? "bg-[#F4E6CD]/10 text-[#6b6b6b]" : "bg-white"} 
         ${isToday ? "bg-[#F4E6CD]" : ""}
         ${isOver ? "bg-[#927950]/10 border-[#927950]" : ""}
-      `}
+                    `}
     >
       <div className="flex items-center justify-between mb-2">
         <span

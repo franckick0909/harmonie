@@ -245,7 +245,7 @@ export default function Hero() {
       className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-[#F4E6CD]"
     >
       {/* Gradient background style Leandra */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#F4E6CD] via-[#EDE4D3] to-[#E5D9C3] z-0" />
+      <div className="absolute inset-0 bg-[#F4E6CD] z-0" />
 
       {/* Background Image */}
       <div
@@ -266,7 +266,7 @@ export default function Hero() {
       </div>
 
       {/* Content */}
-      <div className="hero-content container mx-auto px-6 relative z-10 pt-32 md:pt-40">
+      <div className="hero-content w-full px-2 lg:px-6 py-8 pt-24 md:pt-28 relative z-10 container mx-auto">
         {/* Annotation */}
         <div className="mb-6 md:mb-8">
           <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-[#927950]">
@@ -302,31 +302,45 @@ export default function Hero() {
         <div className="max-w-xl">
           <div
             ref={subtitleRef}
-            className="text-base md:text-lg lg:text-xl font-light text-[#1E211E]/70 leading-tight"
+            className="text-base md:text-lg lg:text-xl font-light text-[#1E211E] leading-relaxed"
           >
-            {/* Ligne 1 */}
+            {/* Mobile / Tablet : highlight all, desktop : highlight only blocks */}
             <span className="block overflow-hidden">
               <span className="subtitle-line block">
-                Des soins infirmiers{" "}
-                <span className="text-[#927950] font-normal">
-                  personnalisés
-                </span>{" "}
-                et
-              </span>
-            </span>
-            {/* Ligne 2 */}
-            <span className="block overflow-hidden">
-              <span className="subtitle-line block">
-                <span className="text-[#927950] font-normal">
-                  bienveillants
+                <span className="
+                  bg-[#f8ddb3] px-1 rounded font-normal
+                  md:bg-transparent md:px-0 md:rounded-none md:font-light
+                  ">
+                  Des soins infirmiers{" "}
+                  <span className="md:bg-[#f8ddb3] md:px-1 md:rounded md:font-normal">
+                    personnalisés
+                  </span>{" "}
+                  et
                 </span>
-                , au service de votre santé
               </span>
             </span>
-            {/* Ligne 3 */}
             <span className="block overflow-hidden">
               <span className="subtitle-line block">
-                et de votre bien-être.
+                <span className="
+                  bg-[#f8ddb3] px-1 rounded font-normal
+                  md:bg-transparent md:px-0 md:rounded-none md:font-light
+                  "
+                >
+                  <span className="md:bg-[#f8ddb3] md:px-1 md:rounded md:font-normal">
+                    bienveillants
+                  </span>
+                  , au service de votre santé
+                </span>
+              </span>
+            </span>
+            <span className="block overflow-hidden">
+              <span className="subtitle-line block">
+                <span className="
+                  bg-[#f8ddb3] px-1 rounded font-normal
+                  md:bg-transparent md:px-0 md:rounded-none md:font-light
+                  ">
+                  et de votre bien-être.
+                </span>
               </span>
             </span>
           </div>

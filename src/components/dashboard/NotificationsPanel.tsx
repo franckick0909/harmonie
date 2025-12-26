@@ -1,5 +1,10 @@
 "use client";
 
+import {
+  sendConfirmationRequests,
+  sendDailyReminders,
+  sendUrgentAlerts,
+} from "@/actions/notifications";
 import { Button } from "@/components/ui/Button";
 import type { Demande } from "@/types/demande";
 import { AnimatePresence, motion } from "framer-motion";
@@ -9,6 +14,7 @@ import {
   Calendar,
   CheckCircle,
   Clock,
+  Loader2,
   Mail,
   Phone,
 } from "lucide-react";
@@ -29,6 +35,13 @@ export function NotificationsPanel({
   const [sentNotifications, setSentNotifications] = useState<Set<string>>(
     new Set()
   );
+  const [quickActionLoading, setQuickActionLoading] = useState<string | null>(
+    null
+  );
+  const [quickActionResult, setQuickActionResult] = useState<{
+    type: "success" | "error";
+    message: string;
+  } | null>(null);
 
   const today = new Date();
   today.setHours(0, 0, 0, 0);
@@ -62,6 +75,46 @@ export function NotificationsPanel({
 
   const isNotificationSent = (demandeId: string, type: "sms" | "email") => {
     return sentNotifications.has(`${demandeId}-${type}`);
+  };
+
+  const handleQuickAction = async (
+    actionId: string,
+    action: () => Promise<{
+      success: boolean;
+      sent?: number;
+      failed?: number;
+      error?: string;
+    }>
+  ) => {
+    setQuickActionLoading(actionId);
+    setQuickActionResult(null);
+
+    try {
+      const result = await action();
+      if (result.success) {
+        setQuickActionResult({
+          type: "success",
+          message: `${result.sent || 0} notification(s) envoyée(s)${
+            result.failed ? `, ${result.failed} échec(s)` : ""
+          }`,
+        });
+      } else {
+        setQuickActionResult({
+          type: "error",
+          message: result.error || "Erreur lors de l'envoi",
+        });
+      }
+    } catch (error) {
+      console.error(error);
+      setQuickActionResult({
+        type: "error",
+        message: "Une erreur est survenue",
+      });
+    } finally {
+      setQuickActionLoading(null);
+      // Masquer le message après 5 secondes
+      setTimeout(() => setQuickActionResult(null), 5000);
+    }
   };
 
   const filterButtons: {
@@ -262,24 +315,53 @@ export function NotificationsPanel({
         <h2 className="font-serif text-xl md:text-2xl text-[#1E211E] mb-6">
           Actions rapides
         </h2>
+
+        {/* Résultat des actions */}
+        <AnimatePresence>
+          {quickActionResult && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className={`mb-6 p-4 rounded-lg flex items-center gap-3 ${
+                quickActionResult.type === "success"
+                  ? "bg-green-50 border border-green-200 text-green-700"
+                  : "bg-red-50 border border-red-200 text-red-700"
+              }`}
+            >
+              {quickActionResult.type === "success" ? (
+                <CheckCircle className="w-5 h-5" />
+              ) : (
+                <AlertCircle className="w-5 h-5" />
+              )}
+              {quickActionResult.message}
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
           <QuickActionCard
             icon={Mail}
             title="Rappel général"
             description="Envoyer un rappel à tous les patients du jour"
-            onClick={() => console.log("Rappel général")}
+            onClick={() => handleQuickAction("daily", sendDailyReminders)}
+            isLoading={quickActionLoading === "daily"}
           />
           <QuickActionCard
             icon={AlertCircle}
             title="Alertes urgentes"
             description="Contacter les patients avec RDV urgents"
-            onClick={() => console.log("Alertes urgentes")}
+            onClick={() => handleQuickAction("urgent", sendUrgentAlerts)}
+            isLoading={quickActionLoading === "urgent"}
           />
           <QuickActionCard
             icon={CheckCircle}
             title="Confirmations"
             description="Demander confirmation aux patients en attente"
-            onClick={() => console.log("Confirmations")}
+            onClick={() =>
+              handleQuickAction("confirm", sendConfirmationRequests)
+            }
+            isLoading={quickActionLoading === "confirm"}
           />
         </div>
       </div>
@@ -332,6 +414,7 @@ interface QuickActionCardProps {
   title: string;
   description: string;
   onClick: () => void;
+  isLoading?: boolean;
 }
 
 function QuickActionCard({
@@ -339,20 +422,30 @@ function QuickActionCard({
   title,
   description,
   onClick,
+  isLoading = false,
 }: QuickActionCardProps) {
   return (
     <motion.button
       type="button"
       onClick={onClick}
-      whileHover={{ y: -4, transition: { duration: 0.2 } }}
-      whileTap={{ scale: 0.98 }}
-      className="p-5 bg-[#F4E6CD]/50 rounded-xl text-left hover:shadow-md transition-all duration-200 group border border-[#d5ccc0]/30 hover:border-[#927950]/30"
+      disabled={isLoading}
+      whileHover={
+        isLoading ? undefined : { y: -4, transition: { duration: 0.2 } }
+      }
+      whileTap={isLoading ? undefined : { scale: 0.98 }}
+      className="p-5 bg-[#F4E6CD]/50 rounded-xl text-left hover:shadow-md transition-all duration-200 group border border-[#d5ccc0]/30 hover:border-[#927950]/30 disabled:opacity-70 disabled:cursor-not-allowed"
     >
       <div className="w-12 h-12 rounded-xl bg-[#927950]/10 flex items-center justify-center mb-4 group-hover:bg-[#927950] group-hover:text-white transition-colors shadow-sm">
-        <Icon className="w-6 h-6 text-[#927950] group-hover:text-white" />
+        {isLoading ? (
+          <Loader2 className="w-6 h-6 text-[#927950] animate-spin" />
+        ) : (
+          <Icon className="w-6 h-6 text-[#927950] group-hover:text-white" />
+        )}
       </div>
       <p className="font-semibold text-[#1E211E] mb-2">{title}</p>
-      <p className="text-sm text-[#6b6b6b] leading-relaxed">{description}</p>
+      <p className="text-sm text-[#6b6b6b] leading-relaxed">
+        {isLoading ? "Envoi en cours..." : description}
+      </p>
     </motion.button>
   );
 }

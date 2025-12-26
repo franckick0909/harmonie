@@ -248,14 +248,14 @@ function DesktopServices() {
                 <div className="relative w-1/2 h-full flex items-center justify-center p-8 lg:p-12">
                   {/* Main Image */}
                   <div
-                    className={`service-image-container relative w-[65%] lg:w-[70%] h-[65%] lg:h-[75%] border ${service.borderColor} p-2 lg:p-3 shadow-2xl rounded-lg bg-transparent`}
+                    className={`service-image-container relative w-[65%] lg:w-[80%] h-[65%] lg:h-[75%] border ${service.borderColor} p-2 lg:p-3 shadow-2xl rounded-lg bg-transparent mt-4`}
                   >
                     <div className="relative w-full h-full overflow-hidden rounded">
                       <Image
                         src={service.image}
                         alt={service.title}
                         fill
-                        sizes="35vw"
+                        sizes="40vw"
                         className="service-image object-cover"
                       />
                     </div>
@@ -275,7 +275,7 @@ function DesktopServices() {
                   </div>
 
                   {/* Number Badge */}
-                  <div className="absolute top-12 lg:top-24 left-8 lg:left-16 bg-white/95 backdrop-blur px-6 lg:px-7 py-3 lg:py-2 text-2xl lg:text-3xl xl:text-4xl font-light font-serif tracking-tight rounded shadow-lg">
+                  <div className="absolute top-12 lg:top-24 left-8 lg:left-13 bg-white/95 backdrop-blur px-6 lg:px-7 py-3 lg:py-2 text-2xl lg:text-3xl xl:text-4xl font-light font-serif tracking-tight rounded shadow-lg">
                     {service.id}
                   </div>
                 </div>
@@ -292,14 +292,14 @@ function DesktopServices() {
                 <div className="relative w-1/2 h-full flex items-center justify-center p-8 lg:p-12">
                   {/* Main Image */}
                   <div
-                    className={`service-image-container relative w-[65%] lg:w-[70%] h-[65%] lg:h-[75%] border ${service.borderColor} p-2 lg:p-3 shadow-2xl rounded-lg bg-transparent`}
+                    className={`service-image-container relative w-[65%] lg:w-[80%] h-[65%] lg:h-[75%] border ${service.borderColor} p-2 lg:p-3 shadow-2xl rounded-lg bg-transparent mt-4`}
                   >
                     <div className="relative w-full h-full overflow-hidden rounded">
                       <Image
                         src={service.image}
                         alt={service.title}
                         fill
-                        sizes="35vw"
+                        sizes="40vw"
                         className="service-image object-cover"
                       />
                     </div>
@@ -337,7 +337,7 @@ function MobileServices() {
   return (
     <section id="services" className="relative bg-[#F4E6CD] py-16 md:py-24">
       {/* Header Mobile */}
-      <div className="container mx-auto px-6 mb-12">
+      <div className="container mx-auto px-2 lg:px-6 mb-12">
         <span className="text-xs uppercase tracking-[0.3em] text-[#927950] mb-4 block font-medium">
           Nos Expertises
         </span>
@@ -353,7 +353,7 @@ function MobileServices() {
       </div>
 
       {/* Mobile Cards */}
-      <div className="space-y-6 px-4 md:px-6">
+      <div className="space-y-6 px-2 container mx-auto">
         {services.map((service) => (
           <MobileServiceCard key={service.id} service={service} />
         ))}

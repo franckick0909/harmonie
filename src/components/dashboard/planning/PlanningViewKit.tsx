@@ -118,7 +118,7 @@ export function PlanningViewKit({
 
     // Créer la nouvelle date/heure
     const newDate = new Date(day);
-    const newHeureRdv = hour === 0 ? "Toute la journée" : `${hour}h00`;
+    const newHeureRdv = hour === 0 ? "Toute la journée" : `${hour}h`;
 
     // Mise à jour optimiste
     onOptimisticUpdate(draggedDemande.id, newDate, newHeureRdv);

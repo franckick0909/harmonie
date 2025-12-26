@@ -506,3 +506,121 @@ input:-webkit-autofill:active {
   -webkit-text-fill-color: var(--foreground) !important;
   caret-color: var(--foreground) !important;
 }
+
+/* ============================================
+   STYLES D'IMPRESSION
+   ============================================ */
+@media print {
+  /* Cacher les éléments non imprimables */
+  header,
+  footer,
+  nav,
+  aside,
+  .no-print,
+  button[type="button"],
+  .print-hidden {
+    display: none !important;
+  }
+
+  /* Réinitialiser les couleurs pour l'impression */
+  body {
+    background: white !important;
+    color: black !important;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  /* Optimiser les tables */
+  table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+  }
+
+  th,
+  td {
+    border: 1px solid #d5ccc0 !important;
+    padding: 8px !important;
+    text-align: left !important;
+  }
+
+  th {
+    background-color: #927950 !important;
+    color: white !important;
+  }
+
+  tr:nth-child(even) {
+    background-color: #f9f7f2 !important;
+  }
+
+  /* Header d'impression */
+  .print-header {
+    display: block !important;
+    text-align: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #927950;
+  }
+
+  .print-header h1 {
+    color: #927950;
+    font-size: 24px;
+    margin: 0;
+  }
+
+  .print-header p {
+    color: #6b6b6b;
+    font-size: 12px;
+    margin: 5px 0 0;
+  }
+
+  /* Cards pour impression */
+  .bg-white {
+    background: white !important;
+    border: 1px solid #d5ccc0 !important;
+    box-shadow: none !important;
+  }
+
+  /* Badges colorés préservés */
+  .bg-green-100,
+  .bg-blue-100,
+  .bg-orange-100,
+  .bg-purple-100 {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  /* Éviter les coupures de page dans les cartes */
+  .rounded-xl,
+  .rounded-2xl {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* Marges de page */
+  @page {
+    margin: 15mm;
+    size: A4;
+  }
+
+  /* Afficher les liens complets */
+  a[href]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+    color: #6b6b6b;
+  }
+
+  /* Cacher les icônes en impression */
+  svg:not(.print-icon) {
+    display: none !important;
+  }
+
+  /* Forcer l'affichage de certains éléments */
+  .print-block {
+    display: block !important;
+  }
+}
+
+/* Classe pour forcer l'affichage en impression */
+.print-block {
+  display: none;
+}

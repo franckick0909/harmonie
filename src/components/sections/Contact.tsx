@@ -1,9 +1,11 @@
 "use client";
 
+import { sendContactMessage } from "@/actions/contact";
 import { useGSAP } from "@gsap/react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { AlertCircle, CheckCircle, Loader2 } from "lucide-react";
 import { useRef, useState } from "react";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -16,6 +18,11 @@ export default function Contact() {
     message: "",
   });
   const [focusedField, setFocusedField] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<{
+    type: "success" | "error" | null;
+    message: string;
+  }>({ type: null, message: "" });
 
   const sectionRef = useRef<HTMLElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
@@ -159,23 +166,61 @@ export default function Contact() {
     { scope: sectionRef }
   );
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(formData);
+
+    if (isSubmitting) return;
+
+    setIsSubmitting(true);
+    setSubmitStatus({ type: null, message: "" });
+
+    try {
+      const result = await sendContactMessage(formData);
+
+      if (result.success) {
+        setSubmitStatus({
+          type: "success",
+          message:
+            "Message envoyé avec succès ! Nous vous répondrons dans les plus brefs délais.",
+        });
+        // Réinitialiser le formulaire
+        setFormData({ name: "", email: "", phone: "", message: "" });
+      } else {
+        setSubmitStatus({
+          type: "error",
+          message:
+            result.error || "Une erreur est survenue. Veuillez réessayer.",
+        });
+      }
+    } catch (error) {
+      console.error(error);
+      setSubmitStatus({
+        type: "error",
+        message:
+          "Une erreur est survenue. Veuillez réessayer ou nous contacter par téléphone.",
+      });
+    } finally {
+      setIsSubmitting(false);
+
+      // Masquer le message après 5 secondes
+      setTimeout(() => {
+        setSubmitStatus({ type: null, message: "" });
+      }, 5000);
+    }
   };
 
   return (
     <section
       ref={sectionRef}
       id="contact"
-      className="relative py-32 md:py-48 bg-[#927950] overflow-hidden"
+      className="relative bg-[#927950] overflow-hidden py-8 pt-24 md:pt-28"
     >
       {/* Background decorative elements */}
       <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-[#1E211E]/5 to-transparent pointer-events-none" />
       <div className="absolute top-1/3 right-0 w-96 h-96 rounded-full border border-[#F4E6CD]/20 translate-x-1/2 pointer-events-none" />
       <div className="absolute bottom-1/4 left-0 w-64 h-64 rounded-full border border-[#F4E6CD]/10 -translate-x-1/2 pointer-events-none" />
 
-      <div className="container mx-auto px-6 relative z-10">
+      <div className="w-full px-2 sm:px-4 lg:px-6 xl:px-12  relative z-10">
         {/* Section header */}
         <div
           ref={headerRef}
@@ -273,10 +318,10 @@ export default function Contact() {
                       (téléphone)
                     </span>
                     <a
-                      href="tel:+33553560303"
+                      href="tel:+33553560456"
                       className="text-lg text-[#F4E6CD] hover:text-white transition-colors duration-300 inline-flex items-center gap-3"
                     >
-                      +33 5 53 56 03 03
+                      +33 5 53 56 04 56
                       <svg
                         className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                         viewBox="0 0 24 24"
@@ -396,6 +441,36 @@ export default function Contact() {
             onSubmit={handleSubmit}
             className="space-y-6 p-6 md:p-8 bg-[#1E211E]/15 backdrop-blur-sm rounded-2xl border border-[#F4E6CD]/10"
           >
+            {/* Status message */}
+            <AnimatePresence>
+              {submitStatus.type && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className={`p-4 rounded-lg flex items-start gap-3 ${
+                    submitStatus.type === "success"
+                      ? "bg-green-500/20 border border-green-400/30"
+                      : "bg-red-500/20 border border-red-400/30"
+                  }`}
+                >
+                  {submitStatus.type === "success" ? (
+                    <CheckCircle className="w-5 h-5 text-green-400 shrink-0 mt-0.5" />
+                  ) : (
+                    <AlertCircle className="w-5 h-5 text-red-400 shrink-0 mt-0.5" />
+                  )}
+                  <p
+                    className={`text-sm ${
+                      submitStatus.type === "success"
+                        ? "text-green-200"
+                        : "text-red-200"
+                    }`}
+                  >
+                    {submitStatus.message}
+                  </p>
+                </motion.div>
+              )}
+            </AnimatePresence>
             <div className="form-field relative">
               <label
                 className={`text-[10px] font-medium tracking-[0.15em] uppercase block mb-3 transition-colors duration-300 ${
@@ -520,9 +595,10 @@ export default function Contact() {
 
             <motion.button
               type="submit"
-              className="form-field group relative w-full py-5 bg-[#F4E6CD] text-[#927950] font-medium text-xs uppercase tracking-[0.15em] overflow-hidden mt-8"
-              whileHover="hover"
-              whileTap={{ scale: 0.98 }}
+              disabled={isSubmitting}
+              className="form-field group relative w-full py-5 bg-[#F4E6CD] text-[#927950] font-medium text-xs uppercase tracking-[0.15em] overflow-hidden mt-8 disabled:opacity-70 disabled:cursor-not-allowed"
+              whileHover={isSubmitting ? undefined : "hover"}
+              whileTap={isSubmitting ? undefined : { scale: 0.98 }}
             >
               {/* Hover effect */}
               <motion.div
@@ -535,16 +611,25 @@ export default function Contact() {
                 className="relative z-10 flex items-center justify-center gap-3"
                 variants={{ hover: { color: "var(--beige)" } }}
               >
-                Envoyer le message
-                <svg
-                  className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-2"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                >
-                  <path d="M21.883 12l-7.527 6.235.644.765 9-7.521-9-7.479-.645.764 7.529 6.236h-21.884v1h21.883z" />
-                </svg>
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                    Envoi en cours...
+                  </>
+                ) : (
+                  <>
+                    Envoyer le message
+                    <svg
+                      className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-2"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      fillRule="evenodd"
+                      clipRule="evenodd"
+                    >
+                      <path d="M21.883 12l-7.527 6.235.644.765 9-7.521-9-7.479-.645.764 7.529 6.236h-21.884v1h21.883z" />
+                    </svg>
+                  </>
+                )}
               </motion.span>
             </motion.button>
 

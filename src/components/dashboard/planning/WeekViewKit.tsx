@@ -90,10 +90,11 @@ export function WeekViewKit({
   return (
     <div className="flex flex-col h-full bg-white border border-[#d5ccc0]/50 shadow-sm rounded-xl overflow-x-auto overflow-y-auto w-full">
       {/* Header avec les jours */}
-      <div className="grid grid-cols-8 border-b border-[#d5ccc0]/50 sticky top-0 bg-white z-10 min-w-[320px] sm:min-w-0">
+      <div className="grid grid-cols-8 border-b border-[#d5ccc0]/50 sticky top-0 bg-white z-10 min-w-[280px] sm:min-w-0">
         {/* Colonne des heures */}
-        <div className="px-3 sm:px-4 py-3 text-sm font-semibold text-[#1E211E] border-r border-[#d5ccc0]/40 text-left bg-[#F9F7F2]">
-          Heure
+        <div className="px-1 sm:px-3 md:px-4 py-2 sm:py-3 text-[10px] sm:text-sm font-semibold text-[#1E211E] border-r border-[#d5ccc0]/40 text-center sm:text-left bg-[#F9F7F2]">
+          <span className="hidden sm:inline">Heure</span>
+          <span className="sm:hidden">H.</span>
         </div>
         {weekDays.map((day, index) => {
           const isToday =
@@ -104,16 +105,26 @@ export function WeekViewKit({
           return (
             <div
               key={index}
-              className={`px-2 sm:px-4 py-3 text-center border-r border-[#d5ccc0]/40 last:border-r-0 ${
-                isToday
-                  ? "bg-[#F4E6CD] text-[#1E211E] font-semibold"
-                  : "bg-white"
+              className={`px-0.5 sm:px-2 md:px-4 py-2 sm:py-3 text-center border-r border-[#d5ccc0]/40 last:border-r-0 ${
+                isToday ? "bg-[#927950] text-white font-semibold" : "bg-white"
               }`}
             >
-              <div className="text-xs sm:text-sm font-medium text-[#1E211E]">
-                {day.toLocaleDateString("fr-FR", { weekday: "short" })}
+              <div
+                className={`text-[10px] sm:text-xs md:text-sm font-medium ${
+                  isToday ? "text-white" : "text-[#1E211E]"
+                }`}
+              >
+                {day
+                  .toLocaleDateString("fr-FR", { weekday: "short" })
+                  .replace(".", "")}
               </div>
-              <div className="text-xs text-[#1E211E]">{day.getDate()}</div>
+              <div
+                className={`text-[10px] sm:text-xs ${
+                  isToday ? "text-white/90" : "text-[#1E211E]"
+                }`}
+              >
+                {day.getDate()}
+              </div>
             </div>
           );
         })}
@@ -121,9 +132,14 @@ export function WeekViewKit({
 
       <div className="flex-1 overflow-auto">
         {/* Ligne "Toute la journée" */}
-        <div className="grid grid-cols-8 border-b border-[#d5ccc0]/40 min-h-[60px] min-w-[320px] sm:min-w-0">
-          <div className="px-3 sm:px-4 py-3 text-xs text-[#1E211E] border-r border-[#d5ccc0]/40 flex items-center bg-[#F9F7F2]">
-            Toute la journée
+        <div className="grid grid-cols-8 border-b border-[#d5ccc0]/40 min-h-[50px] sm:min-h-[60px] min-w-[280px] sm:min-w-0">
+          <div className="px-1 sm:px-3 md:px-4 py-2 sm:py-3 text-[9px] sm:text-xs text-[#1E211E] border-r border-[#d5ccc0]/40 flex items-center justify-center sm:justify-start bg-[#F9F7F2] leading-tight text-center sm:text-left">
+            <span className="hidden sm:inline">Toute la journée</span>
+            <span className="sm:hidden">
+              Toute
+              <br />
+              journée
+            </span>
           </div>
           {weekDays.map((day, dayIndex) => {
             return (
@@ -142,11 +158,11 @@ export function WeekViewKit({
         {HOURS.map((hour) => (
           <div
             key={hour}
-            className="grid grid-cols-8 border-b border-[#d5ccc0]/40 min-h-[60px] min-w-[320px] sm:min-w-0"
+            className="grid grid-cols-8 border-b border-[#d5ccc0]/40 min-h-[50px] sm:min-h-[60px] min-w-[280px] sm:min-w-0"
           >
             {/* Colonne des heures */}
-            <div className="px-3 sm:px-4 py-3 text-xs text-[#1E211E] border-r border-[#d5ccc0]/40 flex items-center bg-[#F9F7F2]">
-              {hour}h00
+            <div className="px-1 sm:px-3 md:px-4 py-2 sm:py-3 text-[10px] sm:text-xs text-[#1E211E] border-r border-[#d5ccc0]/40 flex items-center justify-center sm:justify-start bg-[#F9F7F2]">
+              {hour}h
             </div>
             {weekDays.map((day, dayIndex) => {
               return (
@@ -195,10 +211,10 @@ function DropZoneKit({
   return (
     <div
       ref={setNodeRef}
-      className={`p-1.5 border-r border-[#d5ccc0]/40 relative min-h-[60px] sm:min-h-[80px] ${
-        isToday ? "bg-[#F4E6CD]" : "bg-white"
+      className={`p-0.5 sm:p-1.5 border-r border-[#d5ccc0]/40 relative min-h-[50px] sm:min-h-[60px] md:min-h-[80px] ${
+        isToday ? "bg-[#927950]/10" : "bg-white"
       } ${
-        isOver ? "bg-[#927950]/10 border-[#927950]" : ""
+        isOver ? "bg-[#927950]/20 border-[#927950]" : ""
       } hover:bg-[#F4E6CD]/30 transition-colors`}
       onClick={handleClick}
     >

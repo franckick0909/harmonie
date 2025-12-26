@@ -2,11 +2,12 @@
 
 import { DashboardOverview } from "@/components/dashboard/DashboardOverview";
 import { NotificationsPanel } from "@/components/dashboard/NotificationsPanel";
+import { PatientDetailModal } from "@/components/dashboard/PatientDetailModal";
 import { PatientListTable } from "@/components/dashboard/PatientListTable";
 import { PlanningView } from "@/components/dashboard/planning/PlanningView";
 import { DashboardLayout } from "@/components/layout/DashboardLayout";
 import { PatientService } from "@/services/patientService";
-import type { Demande, PatientStats } from "@/types/demande";
+import type { Demande, Patient, PatientStats } from "@/types/demande";
 import { useMemo, useState } from "react";
 
 interface DashboardTabControllerProps {
@@ -37,6 +38,8 @@ export function DashboardTabController({
   onOptimisticUpdate,
 }: DashboardTabControllerProps) {
   const [activeTab, setActiveTab] = useState("overview");
+  const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null);
+  const [isPatientModalOpen, setIsPatientModalOpen] = useState(false);
 
   // Calculer les statistiques pour le sidebar
   const patients = useMemo(() => {
@@ -47,10 +50,21 @@ export function DashboardTabController({
     return PatientService.calculateStats(patients, demandes);
   }, [patients, demandes]);
 
+  // Gestion de la sélection d'un patient
+  const handlePatientSelect = (patient: Patient) => {
+    setSelectedPatient(patient);
+    setIsPatientModalOpen(true);
+  };
+
+  const handlePatientModalClose = () => {
+    setIsPatientModalOpen(false);
+    setSelectedPatient(null);
+  };
+
   // Fonction pour gérer l'envoi de notifications (placeholder)
   const handleSendNotification = (demandeId: string, type: "sms" | "email") => {
-    console.log(`Envoi de notification ${type} pour la demande ${demandeId}`);
     // TODO: Intégrer avec un service de notification réel
+    console.log(`Envoi de notification ${type} pour la demande ${demandeId}`);
   };
 
   const renderTabContent = () => {
@@ -62,9 +76,7 @@ export function DashboardTabController({
         return (
           <PatientListTable
             demandes={demandes}
-            onPatientSelect={(patient) => {
-              console.log("Patient sélectionné:", patient);
-            }}
+            onPatientSelect={handlePatientSelect}
           />
         );
 
@@ -94,6 +106,7 @@ export function DashboardTabController({
   };
 
   return (
+    <>
     <DashboardLayout
       activeTab={activeTab}
       onTabChange={setActiveTab}
@@ -106,5 +119,15 @@ export function DashboardTabController({
     >
       {renderTabContent()}
     </DashboardLayout>
+
+      {/* Modal détail patient */}
+      <PatientDetailModal
+        patient={selectedPatient}
+        demandes={demandes}
+        isOpen={isPatientModalOpen}
+        onClose={handlePatientModalClose}
+        onDemandeClick={onDemandeSelect}
+      />
+    </>
   );
 }

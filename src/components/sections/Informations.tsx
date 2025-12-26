@@ -127,14 +127,14 @@ export default function Informations() {
     <section
       ref={sectionRef}
       id="informations"
-      className="relative py-32 md:py-48 bg-[#F4E6CD] overflow-hidden"
+      className="relative bg-[#F4E6CD] overflow-hidden py-8 pt-24 md:pt-28"
     >
       {/* Background decorative elements */}
       <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-card/30 to-transparent pointer-events-none" />
       <div className="absolute top-1/4 right-0 w-80 h-80 rounded-full border border-[#927950]/10 translate-x-1/2 pointer-events-none" />
       <div className="absolute bottom-1/3 left-0 w-64 h-64 rounded-full border border-[#927950]/10 -translate-x-1/2 pointer-events-none" />
 
-      <div className="container mx-auto px-6 relative z-10">
+      <div className="container mx-auto px-2 lg:px-6 relative z-10">
         {/* Section header */}
         <div
           ref={headerRef}

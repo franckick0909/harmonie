@@ -127,6 +127,8 @@ export default function ProfilePage() {
                             </div>
                             {!isEditing && (
                                 <button
+                                    type="button"
+                                    title="Modifier le profil"
                                     onClick={() => setIsEditing(true)}
                                     className="ml-auto p-2 text-[#6b6b6b] hover:text-[#927950] transition-colors"
                                 >
@@ -180,6 +182,7 @@ export default function ProfilePage() {
                                     </Button>
                                     <button
                                         type="button"
+                                        title="Annuler"
                                         onClick={() => {
                                             setIsEditing(false);
                                             setName(session?.user?.name || "");

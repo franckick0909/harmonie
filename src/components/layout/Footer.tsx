@@ -125,7 +125,7 @@ export default function Footer() {
       <div className="h-px bg-gradient-to-r from-transparent via-[#927950]/30 to-transparent" />
 
       {/* Main Footer */}
-      <div className="container mx-auto px-6 py-16 md:py-24">
+      <div className="w-full px-2 sm:px-4 lg:px-6 xl:px-12 py-8 pt-24 md:pt-28">
         <div
           ref={contentRef}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8"
@@ -234,7 +234,7 @@ export default function Footer() {
                   Téléphone
                 </span>
                 <a
-                  href="tel:+33553560303"
+                  href="tel:0553560456"
                   className="text-sm md:text-base text-white/80 hover:text-[#927950] transition-colors duration-300 flex items-center gap-2"
                 >
                   <svg
@@ -250,7 +250,7 @@ export default function Footer() {
                       d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"
                     />
                   </svg>
-                  +33 5 53 56 03 03
+                  05 53 56 04 56
                 </a>
               </div>
               <div>

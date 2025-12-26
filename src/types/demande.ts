@@ -12,8 +12,8 @@ export interface Patient {
   ville: string | null;
   codePostal: string | null;
   numeroSecu: string | null;
-  createdAt?: Date;
-  updatedAt?: Date;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export type UrgenceType = "FAIBLE" | "NORMALE" | "ELEVEE" | "URGENTE";

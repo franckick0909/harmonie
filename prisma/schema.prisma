@@ -15,11 +15,22 @@ model User {
   phoneNumber         String?  @unique
   phoneNumberVerified Boolean  @default(false)
   image               String?
+  role                Role     @default(PATIENT)
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
 
   sessions Session[]
   accounts Account[]
+
+  // Relation optionnelle avec Patient (pour les utilisateurs patients)
+  patientId String?  @unique
+  patient   Patient? @relation(fields: [patientId], references: [id])
+}
+
+enum Role {
+  ADMIN // Propriétaire du cabinet (vous)
+  NURSE // Infirmières
+  PATIENT // Patients
 }
 
 model Session {
@@ -81,6 +92,9 @@ model Patient {
   demandes          Demande[]
   createdAt         DateTime  @default(now())
   updatedAt         DateTime  @updatedAt
+
+  // Relation avec le compte utilisateur (optionnel)
+  user User?
 }
 
 model Demande {
@@ -117,10 +131,10 @@ model PlanningStats {
   type String // "jour", "semaine", "mois"
 
   // Compteurs
-  totalPatients         Int @default(0)
-  patientsAujourdhui    Int @default(0)
-  patientsCetteSemaine  Int @default(0)
-  patientsCeMois        Int @default(0)
+  totalPatients        Int @default(0)
+  patientsAujourdhui   Int @default(0)
+  patientsCetteSemaine Int @default(0)
+  patientsCeMois       Int @default(0)
 
   // Métadonnées
   createdAt DateTime @default(now())

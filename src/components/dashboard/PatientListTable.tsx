@@ -1,13 +1,16 @@
 "use client";
 
+import { exportPatientsToPDF } from "@/services/exportService";
 import { PatientService } from "@/services/patientService";
 import type { Demande, Patient } from "@/types/demande";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   ChevronDown,
   ChevronUp,
+  Download,
   Mail,
   Phone,
+  Printer,
   Search,
   User,
 } from "lucide-react";
@@ -147,16 +150,38 @@ export function PatientListTable({
           </p>
         </div>
 
-        {/* Search */}
-        <div className="relative w-full md:w-80">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#6b6b6b]" />
-          <input
-            type="text"
-            placeholder="Rechercher un patient..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-3 bg-white border border-[#d5ccc0]/50 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#927950] focus:border-[#927950] text-[#1E211E] placeholder:text-[#6b6b6b] transition-all"
-          />
+        <div className="flex flex-col md:flex-row items-stretch md:items-center gap-3">
+          {/* Boutons Export/Imprimer */}
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => exportPatientsToPDF(patients, demandes)}
+              className="flex items-center gap-2 px-3 py-2 bg-[#927950] text-white rounded-lg hover:bg-[#7a6443] transition-colors text-sm"
+            >
+              <Download className="w-4 h-4" />
+              <span className="hidden sm:inline">Export PDF</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => window.print()}
+              className="flex items-center gap-2 px-3 py-2 bg-white border border-[#d5ccc0] text-[#1E211E] rounded-lg hover:bg-[#F9F7F2] transition-colors text-sm"
+            >
+              <Printer className="w-4 h-4" />
+              <span className="hidden sm:inline">Imprimer</span>
+            </button>
+          </div>
+
+          {/* Search */}
+          <div className="relative w-full md:w-80">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#6b6b6b]" />
+            <input
+              type="text"
+              placeholder="Rechercher un patient..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-10 pr-4 py-3 bg-white border border-[#d5ccc0]/50 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#927950] focus:border-[#927950] text-[#1E211E] placeholder:text-[#6b6b6b] transition-all"
+            />
+          </div>
         </div>
       </div>
 

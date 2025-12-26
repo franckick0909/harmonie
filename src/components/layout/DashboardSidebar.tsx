@@ -8,6 +8,7 @@ import {
   Bell,
   Calendar,
   ChevronRight,
+  Crown,
   Home,
   TrendingUp,
   Users,
@@ -49,12 +50,14 @@ interface DashboardSidebarProps {
   activeTab: string;
   onTabChange: (tab: string) => void;
   stats?: Partial<DashboardStats>;
+  isMobile?: boolean;
 }
 
 export function DashboardSidebar({
   activeTab,
   onTabChange,
   stats,
+  isMobile = false,
 }: DashboardSidebarProps) {
   const { isCollapsed, toggleCollapsed } = useSidebar();
   const { isDesktop } = useBreakpoint();
@@ -118,13 +121,15 @@ export function DashboardSidebar({
     },
   ];
 
-  // Toujours visible - collapsed sur tablette (< lg), étendu sur desktop (>= lg)
-  const effectiveCollapsed = !isDesktop || isCollapsed;
+  // Sur mobile (menu slide), toujours étendu
+  // Sur tablette (< lg), collapsed
+  // Sur desktop (>= lg), dépend de isCollapsed
+  const effectiveCollapsed = isMobile ? false : !isDesktop || isCollapsed;
 
   return (
     <motion.div
       animate={{
-        width: effectiveCollapsed ? 64 : 320,
+        width: isMobile ? 280 : effectiveCollapsed ? 64 : 320,
       }}
       transition={{
         duration: 0.4,
@@ -280,7 +285,7 @@ export function DashboardSidebar({
                             opacity: 0,
                             x: -10,
                             transition: {
-                              duration: 0.10,
+                              duration: 0.1,
                               delay: 0,
                               ease: [0.4, 0, 1, 1],
                             },
@@ -303,6 +308,34 @@ export function DashboardSidebar({
           })}
         </motion.div>
       </nav>
+
+      {/* Lien Administration */}
+      <div className="p-2 border-t border-[#F4E6CD]/10">
+        <Link
+          href="/dashboard/admin"
+          className={`w-full h-[50px] px-2 ${
+            effectiveCollapsed ? "justify-center px-0" : "justify-start"
+          } rounded-xl flex items-center transition-all duration-200 hover:bg-[#F4E6CD]/10 text-[#F4E6CD]/80`}
+        >
+          <div
+            className={`flex items-center ${
+              effectiveCollapsed ? "justify-center" : "gap-3"
+            } w-full`}
+          >
+            <Crown className="w-5 h-5" strokeWidth={1.2} />
+            {!effectiveCollapsed && (
+              <div className="flex-1 text-left">
+                <div className="font-medium text-sm md:text-[15px]">
+                  Administration
+                </div>
+                <div className="text-xs md:text-[13px] opacity-60 font-light">
+                  Gestion des utilisateurs
+                </div>
+              </div>
+            )}
+          </div>
+        </Link>
+      </div>
 
       {/* Statistiques rapides */}
       <AnimatePresence>
@@ -361,9 +394,7 @@ export function DashboardSidebar({
                   >
                     {stat.icon}
                   </motion.div>
-                  <span className="text-[#F4E6CD]/70 flex-1">
-                    {stat.label}
-                  </span>
+                  <span className="text-[#F4E6CD]/70 flex-1">{stat.label}</span>
                   <motion.span
                     className={`font-medium ${stat.color}`}
                     initial={{ opacity: 0 }}
