@@ -158,280 +158,281 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-[#0a0a0a] relative overflow-hidden">
       <Header />
-      <div className="w-full px-2 sm:px-4 lg:px-6 xl:px-12 py-8 pt-24 md:pt-28">
-      {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a] via-[#1E211E] to-[#0a0a0a]" />
+      <div className="w-full px-0 sm:px-4 lg:px-6 xl:px-12 py-8 pt-24 md:pt-28">
+        {/* Background gradient */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a] via-[#1E211E] to-[#0a0a0a]" />
 
-      {/* Gold accent lines */}
-      <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#927950]/30 to-transparent" />
-      <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#927950]/30 to-transparent" />
+        {/* Gold accent lines */}
+        <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#927950]/30 to-transparent" />
+        <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#927950]/30 to-transparent" />
 
-      {/* Decorative elements */}
-      <div className="absolute top-20 right-20 w-64 h-64 bg-[#927950]/5 rounded-full blur-3xl" />
-      <div className="absolute bottom-20 left-20 w-96 h-96 bg-[#927950]/5 rounded-full blur-3xl" />
+        {/* Decorative elements */}
+        <div className="absolute top-20 right-20 w-64 h-64 bg-[#927950]/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-20 left-20 w-96 h-96 bg-[#927950]/5 rounded-full blur-3xl" />
 
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: [0.19, 1, 0.22, 1] }}
-        className="w-full max-w-lg mx-auto relative z-10"
-      >
-        {/* Back link */}
-        <Link
-          href="/"
-          className="inline-flex items-center gap-2 text-neutral-500 hover:text-[#927950] transition-colors text-xs uppercase tracking-[0.2em] font-medium mb-12 group"
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: [0.19, 1, 0.22, 1] }}
+          className="w-full max-w-lg mx-auto relative z-10"
         >
-          <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
-          Retour au site
-        </Link>
+          {/* Back link */}
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 text-neutral-500 hover:text-[#927950] transition-colors text-xs uppercase tracking-[0.2em] font-medium mb-6 sm:mb-12 group px-2"
+          >
+            <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
+            Retour au site
+          </Link>
 
-        {/* Card */}
-        <div className="bg-[#111111] border border-[#222222] p-8 md:p-12">
-          {/* Header */}
-          <div className="text-center mb-10">
-            <h1 className="font-serif text-4xl md:text-5xl text-white mb-3">
-              Harmonie
-            </h1>
-            <div className="flex items-center justify-center gap-4">
-              <div className="h-[1px] w-12 bg-gradient-to-r from-transparent to-[#927950]" />
-              <p className="text-[#927950] text-xs uppercase tracking-[0.3em]">
-                Espace Patient
-              </p>
-              <div className="h-[1px] w-12 bg-gradient-to-l from-transparent to-[#927950]" />
-            </div>
-          </div>
-
-          {/* Tabs */}
-          <div className="flex border-b border-[#222222] mb-8">
-            <button
-              onClick={() => setIsLogin(true)}
-              className={`flex-1 pb-4 text-sm uppercase tracking-[0.15em] font-medium transition-all relative ${
-                isLogin
-                  ? "text-white"
-                  : "text-neutral-500 hover:text-neutral-300"
-              }`}
-            >
-              Connexion
-              {isLogin && (
-                <motion.div
-                  layoutId="activeTab"
-                  className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#927950]"
-                />
-              )}
-            </button>
-            <button
-              onClick={() => setIsLogin(false)}
-              className={`flex-1 pb-4 text-sm uppercase tracking-[0.15em] font-medium transition-all relative ${
-                !isLogin
-                  ? "text-white"
-                  : "text-neutral-500 hover:text-neutral-300"
-              }`}
-            >
-              Inscription
-              {!isLogin && (
-                <motion.div
-                  layoutId="activeTab"
-                  className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#927950]"
-                />
-              )}
-            </button>
-          </div>
-
-          {/* Error */}
-          {error && (
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="bg-red-900/20 border border-red-800/50 text-red-400 px-4 py-3 text-sm mb-6"
-            >
-              {error}
-            </motion.div>
-          )}
-
-          {/* Form */}
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {!isLogin && (
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <label className="text-xs uppercase tracking-[0.15em] text-neutral-500">
-                    Prénom
-                  </label>
-                  <Input
-                    className="w-full bg-transparent border-0 border-b border-[#333333] rounded-none px-0 py-3 text-white placeholder:text-neutral-600 focus:border-[#927950] transition-colors focus:ring-0 no-auto-focus not-focus"
-                    placeholder="Jean"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                    required={!isLogin}
-                    autoComplete="nope"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-xs uppercase tracking-[0.15em] text-neutral-500">
-                    Nom
-                  </label>
-                  <Input
-                    className="w-full bg-transparent border-0 border-b border-[#333333] rounded-none px-0 py-3 text-white placeholder:text-neutral-600 focus:border-[#927950] transition-colors focus:ring-0"
-                    placeholder="Dupont"
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                    required={!isLogin}
-                    autoComplete="nope"
-                  />
-                </div>
+          {/* Card */}
+          <div className="bg-[#111111] border border-[#222222] p-2 sm:p-4 md:p-8 lg:p-12">
+            {/* Header */}
+            <div className="text-center mb-6 sm:mb-10">
+              <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl text-white mb-2 sm:mb-3">
+                Harmonie
+              </h1>
+              <div className="flex items-center justify-center gap-3 sm:gap-4">
+                <div className="h-[1px] w-8 sm:w-12 bg-gradient-to-r from-transparent to-[#927950]" />
+                <p className="text-[#927950] text-[10px] sm:text-xs uppercase tracking-[0.2em] sm:tracking-[0.3em]">
+                  Espace Patient
+                </p>
+                <div className="h-[1px] w-8 sm:w-12 bg-gradient-to-l from-transparent to-[#927950]" />
               </div>
+            </div>
+
+            {/* Tabs */}
+            <div className="flex border-b border-[#222222] mb-6 sm:mb-8">
+              <button
+                type="button"
+                onClick={() => setIsLogin(true)}
+                className={`flex-1 pb-3 sm:pb-4 text-xs sm:text-sm uppercase tracking-[0.1em] sm:tracking-[0.15em] font-medium transition-all relative ${
+                  isLogin
+                    ? "text-white"
+                    : "text-neutral-500 hover:text-neutral-300"
+                }`}
+              >
+                Connexion
+                {isLogin && (
+                  <motion.div
+                    layoutId="activeTab"
+                    className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#927950]"
+                  />
+                )}
+              </button>
+              <button
+                onClick={() => setIsLogin(false)}
+                className={`flex-1 pb-3 sm:pb-4 text-xs sm:text-sm uppercase tracking-[0.1em] sm:tracking-[0.15em] font-medium transition-all relative ${
+                  !isLogin
+                    ? "text-white"
+                    : "text-neutral-500 hover:text-neutral-300"
+                }`}
+              >
+                Inscription
+                {!isLogin && (
+                  <motion.div
+                    layoutId="activeTab"
+                    className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#927950]"
+                  />
+                )}
+              </button>
+            </div>
+
+            {/* Error */}
+            {error && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="bg-red-900/20 border border-red-800/50 text-red-400 px-4 py-3 text-sm mb-6"
+              >
+                {error}
+              </motion.div>
             )}
 
-            <div className="space-y-2">
-              <label className="text-xs uppercase tracking-[0.15em] text-neutral-500">
-                Email
-              </label>
-              <Input
-                type="email"
-                className="w-full bg-transparent border-0 border-b border-[#333333] rounded-none px-0 py-3 text-white placeholder:text-neutral-600 focus:border-[#927950] transition-colors focus:ring-0"
-                placeholder="jean.dupont@example.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                autoComplete="username"
-              />
-            </div>
+            {/* Form */}
+            <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+              {!isLogin && (
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <label className="text-xs uppercase tracking-[0.15em] text-neutral-500">
+                      Prénom
+                    </label>
+                    <Input
+                      className="w-full bg-transparent border-0 border-b border-[#333333] rounded-none px-0 py-3 text-white placeholder:text-neutral-600 focus:border-[#927950] transition-colors focus:ring-0 no-auto-focus not-focus"
+                      placeholder="Jean"
+                      value={firstName}
+                      onChange={(e) => setFirstName(e.target.value)}
+                      required={!isLogin}
+                      autoComplete="nope"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-xs uppercase tracking-[0.15em] text-neutral-500">
+                      Nom
+                    </label>
+                    <Input
+                      className="w-full bg-transparent border-0 border-b border-[#333333] rounded-none px-0 py-3 text-white placeholder:text-neutral-600 focus:border-[#927950] transition-colors focus:ring-0"
+                      placeholder="Dupont"
+                      value={lastName}
+                      onChange={(e) => setLastName(e.target.value)}
+                      required={!isLogin}
+                      autoComplete="nope"
+                    />
+                  </div>
+                </div>
+              )}
 
-            <div className="space-y-2">
-              <label className="text-xs uppercase tracking-[0.15em] text-neutral-500">
-                Mot de passe
-              </label>
-              <Input
-                type="password"
-                className="w-full bg-transparent border-0 border-b border-[#333333] rounded-none px-0 py-3 text-white placeholder:text-neutral-600 focus:border-[#927950] transition-colors focus:ring-0"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                minLength={8}
-                autoComplete="new-password"
-              />
-            </div>
-
-            {!isLogin && (
               <div className="space-y-2">
                 <label className="text-xs uppercase tracking-[0.15em] text-neutral-500">
-                  Confirmer le mot de passe
+                  Email
+                </label>
+                <Input
+                  type="email"
+                  className="w-full bg-transparent border-0 border-b border-[#333333] rounded-none px-0 py-3 text-white placeholder:text-neutral-600 focus:border-[#927950] transition-colors focus:ring-0"
+                  placeholder="jean.dupont@example.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  autoComplete="username"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-xs uppercase tracking-[0.15em] text-neutral-500">
+                  Mot de passe
                 </label>
                 <Input
                   type="password"
                   className="w-full bg-transparent border-0 border-b border-[#333333] rounded-none px-0 py-3 text-white placeholder:text-neutral-600 focus:border-[#927950] transition-colors focus:ring-0"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  required={!isLogin}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
                   minLength={8}
                   autoComplete="new-password"
                 />
               </div>
-            )}
 
-            {isLogin && (
-              <div className="flex items-center justify-between pt-2">
-                <label className="flex items-center gap-3 cursor-pointer group">
-                  <input
-                    type="checkbox"
-                    checked={rememberMe}
-                    onChange={(e) => setRememberMe(e.target.checked)}
-                    className="w-4 h-4 border border-[#333333] bg-transparent rounded-none accent-[#927950] cursor-pointer"
+              {!isLogin && (
+                <div className="space-y-2">
+                  <label className="text-xs uppercase tracking-[0.15em] text-neutral-500">
+                    Confirmer le mot de passe
+                  </label>
+                  <Input
+                    type="password"
+                    className="w-full bg-transparent border-0 border-b border-[#333333] rounded-none px-0 py-3 text-white placeholder:text-neutral-600 focus:border-[#927950] transition-colors focus:ring-0"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    required={!isLogin}
+                    minLength={8}
+                    autoComplete="new-password"
                   />
-                  <span className="text-xs uppercase tracking-[0.1em] text-neutral-500 group-hover:text-neutral-300 transition-colors">
-                    Se souvenir de moi
-                  </span>
-                </label>
-                <Link
-                  href="/forgot-password"
-                  className="text-xs uppercase tracking-[0.1em] text-[#927950] hover:text-[#a8906a] transition-colors"
-                >
-                  Mot de passe oublié ?
-                </Link>
+                </div>
+              )}
+
+              {isLogin && (
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0 pt-2">
+                  <label className="flex items-center gap-2 sm:gap-3 cursor-pointer group">
+                    <input
+                      type="checkbox"
+                      checked={rememberMe}
+                      onChange={(e) => setRememberMe(e.target.checked)}
+                      className="w-4 h-4 border border-[#333333] bg-transparent rounded-none accent-[#927950] cursor-pointer"
+                    />
+                    <span className="text-[10px] sm:text-xs uppercase tracking-[0.05em] sm:tracking-[0.1em] text-neutral-500 group-hover:text-neutral-300 transition-colors">
+                      Se souvenir de moi
+                    </span>
+                  </label>
+                  <Link
+                    href="/forgot-password"
+                    className="text-[10px] sm:text-xs uppercase tracking-[0.05em] sm:tracking-[0.1em] text-[#927950] hover:text-[#a8906a] transition-colors"
+                  >
+                    Mot de passe oublié ?
+                  </Link>
+                </div>
+              )}
+
+              <Button
+                type="submit"
+                disabled={isLoading}
+                className="w-full h-12 sm:h-14 bg-[#927950] text-[#0a0a0a] hover:bg-[#a8906a] rounded-none uppercase tracking-[0.15em] sm:tracking-[0.2em] text-xs sm:text-sm font-semibold mt-6 sm:mt-8 disabled:opacity-50 transition-all"
+              >
+                {isLoading ? (
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                ) : isLogin ? (
+                  "Se connecter"
+                ) : (
+                  "S'inscrire"
+                )}
+              </Button>
+            </form>
+
+            {/* Divider */}
+            <div className="relative my-6 sm:my-8">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-[#222222]" />
               </div>
-            )}
-
-            <Button
-              type="submit"
-              disabled={isLoading}
-              className="w-full h-14 bg-[#927950] text-[#0a0a0a] hover:bg-[#a8906a] rounded-none uppercase tracking-[0.2em] text-sm font-semibold mt-8 disabled:opacity-50 transition-all"
-            >
-              {isLoading ? (
-                <Loader2 className="w-5 h-5 animate-spin" />
-              ) : isLogin ? (
-                "Se connecter"
-              ) : (
-                "S'inscrire"
-              )}
-            </Button>
-          </form>
-
-          {/* Divider */}
-          <div className="relative my-8">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-[#222222]" />
+              <div className="relative flex justify-center text-[10px] sm:text-xs uppercase">
+                <span className="bg-[#111111] px-3 sm:px-4 text-neutral-500 tracking-[0.1em] sm:tracking-[0.15em]">
+                  Ou continuer avec
+                </span>
+              </div>
             </div>
-            <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-[#111111] px-4 text-neutral-500 tracking-[0.15em]">
-                Ou continuer avec
-              </span>
+
+            {/* OAuth Buttons */}
+            <div className="grid grid-cols-2 gap-3 sm:gap-4">
+              <button
+                type="button"
+                onClick={handleGoogleSignIn}
+                disabled={isGoogleLoading || isLoading}
+                className="flex items-center justify-center gap-2 sm:gap-3 h-11 sm:h-12 border border-[#333333] hover:border-[#927950] text-white transition-all disabled:opacity-50"
+              >
+                {isGoogleLoading ? (
+                  <Loader2 className="w-4 sm:w-5 h-4 sm:h-5 animate-spin" />
+                ) : (
+                  <>
+                    <GoogleIcon className="w-4 sm:w-5 h-4 sm:h-5" />
+                    <span className="text-[10px] sm:text-xs uppercase tracking-[0.05em] sm:tracking-[0.1em]">
+                      Google
+                    </span>
+                  </>
+                )}
+              </button>
+              <button
+                type="button"
+                onClick={handleAppleSignIn}
+                disabled={isAppleLoading || isLoading}
+                className="flex items-center justify-center gap-2 sm:gap-3 h-11 sm:h-12 border border-[#333333] hover:border-[#927950] text-white transition-all disabled:opacity-50"
+              >
+                {isAppleLoading ? (
+                  <Loader2 className="w-4 sm:w-5 h-4 sm:h-5 animate-spin" />
+                ) : (
+                  <>
+                    <AppleIcon className="w-4 sm:w-5 h-4 sm:h-5" />
+                    <span className="text-[10px] sm:text-xs uppercase tracking-[0.05em] sm:tracking-[0.1em]">
+                      Apple
+                    </span>
+                  </>
+                )}
+              </button>
+            </div>
+
+            {/* Phone verification option */}
+            <div className="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-[#222222]">
+              <Link
+                href="/verify-phone"
+                className="flex items-center justify-center gap-2 sm:gap-3 text-neutral-500 hover:text-[#927950] transition-colors text-[10px] sm:text-xs uppercase tracking-[0.1em] sm:tracking-[0.15em]"
+              >
+                <Phone className="w-3.5 sm:w-4 h-3.5 sm:h-4" />
+                Vérifier mon téléphone
+              </Link>
             </div>
           </div>
 
-          {/* OAuth Buttons */}
-          <div className="grid grid-cols-2 gap-4">
-            <button
-              type="button"
-              onClick={handleGoogleSignIn}
-              disabled={isGoogleLoading || isLoading}
-              className="flex items-center justify-center gap-3 h-12 border border-[#333333] hover:border-[#927950] text-white transition-all disabled:opacity-50"
-            >
-              {isGoogleLoading ? (
-                <Loader2 className="w-5 h-5 animate-spin" />
-              ) : (
-                <>
-                  <GoogleIcon className="w-5 h-5" />
-                  <span className="text-xs uppercase tracking-[0.1em]">
-                    Google
-                  </span>
-                </>
-              )}
-            </button>
-            <button
-              type="button"
-              onClick={handleAppleSignIn}
-              disabled={isAppleLoading || isLoading}
-              className="flex items-center justify-center gap-3 h-12 border border-[#333333] hover:border-[#927950] text-white transition-all disabled:opacity-50"
-            >
-              {isAppleLoading ? (
-                <Loader2 className="w-5 h-5 animate-spin" />
-              ) : (
-                <>
-                  <AppleIcon className="w-5 h-5" />
-                  <span className="text-xs uppercase tracking-[0.1em]">
-                    Apple
-                  </span>
-                </>
-              )}
-            </button>
-          </div>
-
-          {/* Phone verification option */}
-          <div className="mt-8 pt-8 border-t border-[#222222]">
-            <Link
-              href="/verify-phone"
-              className="flex items-center justify-center gap-3 text-neutral-500 hover:text-[#927950] transition-colors text-xs uppercase tracking-[0.15em]"
-            >
-              <Phone className="w-4 h-4" />
-              Vérifier mon téléphone
-            </Link>
-          </div>
-        </div>
-
-        {/* Footer */}
-        <p className="text-center text-neutral-600 text-xs mt-8 uppercase tracking-[0.1em]">
-          © 2024 Harmonie — Cabinet Infirmier
-        </p>
-      </motion.div>
+          {/* Footer */}
+          <p className="text-center text-neutral-600 text-[10px] sm:text-xs mt-6 sm:mt-8 uppercase tracking-[0.05em] sm:tracking-[0.1em]">
+            © 2024 Harmonie — Cabinet Infirmier
+          </p>
+        </motion.div>
       </div>
     </div>
   );
